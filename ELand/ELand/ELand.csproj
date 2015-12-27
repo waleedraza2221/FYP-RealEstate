@@ -177,6 +177,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fonts\fontawesome\fonts\fontawesome-webfonte0a5-2.html" />
+    <Content Include="Content\fonts\fontawesome\fonts\fontawesome-webfonte0a5.html" />
+    <Content Include="Content\fonts\fontawesome\fonts\fontawesome-webfonte0a5.svg" />
     <Content Include="Content\kendo\2015.2.902\Black\editor.png" />
     <Content Include="Content\kendo\2015.2.902\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2015.2.902\Black\indeterminate.gif" />
@@ -516,6 +519,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Content\Theme\style.css" />
+    <Content Include="Images\MainPage\logo.png" />
+    <Content Include="Images\MainPage\megamenu-image.jpg" />
+    <Content Include="Images\Sliders\header-slider-1.jpg" />
+    <Content Include="Images\Sliders\header-slider-3.jpg" />
+    <Content Include="Images\Sliders\logo-slider.png" />
+    <Content Include="Images\Sliders\logo-sliderLight.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\kendo\2015.2.902\fonts\DejaVu\DejaVuSans-Bold.ttf" />
@@ -533,14 +544,43 @@
     <Content Include="Content\kendo\2015.2.902\fonts\DejaVu\DejaVuSerif.ttf" />
     <Content Include="Content\kendo\2015.2.902\images\kendoui.ttf" />
     <Content Include="Content\kendo\2015.2.902\images\kendoui.woff" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Content\fonts\fontawesome\fonts\fontawesome-webfontd41d.eot" />
+    <Content Include="Content\fonts\fontawesome\fonts\fontawesome-webfonte0a5.eot" />
+    <Content Include="Content\fonts\fontawesome\fonts\fontawesome-webfonte0a5.woff" />
+    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\charts\Chart.min.js" />
+    <Content Include="Scripts\js\charts\init.js" />
+    <Content Include="Scripts\js\contact-form.js" />
+    <Content Include="Scripts\js\counter\init.js" />
+    <Content Include="Scripts\js\counter\jquery.countTo.js" />
+    <Content Include="Scripts\js\ct-mediaSection\jquery.stellar.min.js" />
+    <Content Include="Scripts\js\datepicker\bootstrap-datepicker.js" />
+    <Content Include="Scripts\js\datepicker\init.js" />
+    <Content Include="Scripts\js\dependencies.js" />
+    <Content Include="Scripts\js\gmaps\gmap3.min.js" />
+    <Content Include="Scripts\js\jquery.min.js" />
+    <Content Include="Scripts\js\magnific-popup\init.js" />
+    <Content Include="Scripts\js\magnific-popup\jquery.magnific-popup.min.js" />
+    <Content Include="Scripts\js\main.js" />
+    <Content Include="Scripts\js\modernizr.custom.js" />
+    <Content Include="Scripts\js\onepager\init.js" />
+    <Content Include="Scripts\js\onepager\jquery.pagescroller.lite.js" />
+    <Content Include="Scripts\js\owl\owl.carousel.min.js" />
+    <Content Include="Scripts\js\portfolio\imagesloaded.js" />
+    <Content Include="Scripts\js\portfolio\init.js" />
+    <Content Include="Scripts\js\portfolio\jquery.isotope.min.js" />
+    <Content Include="Scripts\js\progressbars\init.js" />
+    <Content Include="Scripts\js\progressicons\init.js" />
+    <Content Include="Scripts\js\select2\select2.min.js" />
+    <Content Include="Scripts\js\slider-bootstrap\bootstrap-slider.js" />
     <Content Include="Scripts\kendo.modernizr.custom.js" />
     <Content Include="Scripts\kendo\2015.2.902\angular.min.js" />
     <Content Include="Scripts\kendo\2015.2.902\jquery.min.js" />
@@ -676,6 +716,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Video\showcase.mp4" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -690,7 +731,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -841,6 +881,7 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
+    <Content Include="Video\showcase.webm" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

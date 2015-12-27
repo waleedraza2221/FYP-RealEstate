@@ -10,6 +10,7 @@ namespace ELand.Controllers
     {
         public ActionResult Index()
         {
+            @ViewBag.title = "A Real Estate Website";
             return View();
         }
 
