@@ -42,6 +42,17 @@ namespace ELand
             bundles.Add(new ScriptBundle("~/Scripts/AdminJs").Include(
                 "~/Content/AdminTheme/js/sb-admin-2.js",
                 "~/Content/AdminTheme/js/metisMenu.min.js"));
+            //Bundle For Kendo
+            bundles.Add(new ScriptBundle("~/Scripts/Kendo").Include(
+               "~/Scripts/kendo/js/jszip.min.js", 
+               "~/Scripts/kendo/js/kendo.all.min.js",
+                "~/Scripts/kendo/js/kendo.aspnetmvc.min.js"));
+            bundles.Add(new StyleBundle("~/Content/Kendo").Include(
+                "~/Content/kendo/css/kendo.common.min.css",
+                "~/Content/kendo/css/kendo.blueopal.mobile.min.css",
+                "~/Content/kendo/css/kendo.dataviz.min.css",
+                 "~/Content/kendo/css/kendo.blueopal.min.css",
+                "~/Content/kendo/css/kendo.dataviz.default.min.css"));
         }
     }
 }

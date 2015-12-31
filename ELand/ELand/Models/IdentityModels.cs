@@ -62,5 +62,7 @@ namespace ELand.Models
 
             return new ApplicationDbContext();
         }
+
+       // public System.Data.Entity.DbSet<ELand.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
