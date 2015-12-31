@@ -34,6 +34,14 @@ namespace ELand
                 "~/Scripts/js/ct-mediaSection/jquery.stellar.min.js",
                 "~/Scripts/js/owl/owl.carousel.min.js",
                 "~/Scripts/js/main.js"));
+            bundles.Add(new StyleBundle("~/Content/Admin").Include(
+               "~/Content/bootstrap.css",
+               "~/Content/AdminTheme/css/sb-admin-2.css",
+               "~/Content/font-awesome.css",
+               "~/Content/AdminTheme/css/metisMenu.css"));
+            bundles.Add(new ScriptBundle("~/Scripts/AdminJs").Include(
+                "~/Content/AdminTheme/js/sb-admin-2.js",
+                "~/Content/AdminTheme/js/metisMenu.min.js"));
         }
     }
 }

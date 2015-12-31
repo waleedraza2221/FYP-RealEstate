@@ -3,6 +3,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using System.Data;
 
 namespace ELand.Models
 {
@@ -16,6 +19,26 @@ namespace ELand.Models
             // Add custom user claims here
             return userIdentity;
         }
+        public ApplicationUser() {
+         this.Properties = new HashSet<Property>();
+        }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Phone { get; set; }
+        public string Skype { get; set; }
+        public string Twitter { get; set; }
+        public string Instagram { get; set; }
+        public bool IsAgencyAdmin {get; set;}
+        public int? AccountTypeId { get; set; }
+        [ForeignKey("AccountTypeId")]
+        public AccountType AccountType { get; set; }
+        public int? AgencyId { get; set; }
+        [ForeignKey("AgencyId")]
+        public Agency Agency { get; set; }
+
+        public virtual ICollection<Property> Properties { get; set; }
+
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -23,10 +46,20 @@ namespace ELand.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-        }
+          //  Database.SetInitializer<ApplicationDbContext>(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
 
+        }
+        public DbSet<Agency> Agency { get; set; }
+        public DbSet<Property> Property { get; set; }
+        public DbSet<AccountType> AccountType { get; set; }
+        public DbSet<AreaUnit> AreaUnit { get; set; }
+        public DbSet<Purpose> Purpose { get; set; }
+        public DbSet<Type> Type { get; set; }
+        public DbSet<Contact> Contact { get; set; }
+        public DbSet<Faq> Faq { get; set; }
         public static ApplicationDbContext Create()
         {
+
             return new ApplicationDbContext();
         }
     }
