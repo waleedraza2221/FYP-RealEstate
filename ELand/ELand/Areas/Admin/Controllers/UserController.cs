@@ -20,7 +20,14 @@ namespace ELand.Areas.Admin.Controllers
         {
             return View();
         }
+        public ActionResult User_Create() {
 
+            return View();
+        }
+        public ActionResult User_Details(string id) {
+
+            return View();
+        }
         public ActionResult ApplicationUsers_Read([DataSourceRequest]DataSourceRequest request)
         {
             IQueryable<ApplicationUser> applicationusers = db.Users;
@@ -48,6 +55,19 @@ namespace ELand.Areas.Admin.Controllers
 
             return Json(result);
         }
+
+
+        public ActionResult FirstName()
+        {
+           
+            return Json(db.Users.Select(e => e.FirstName).Distinct(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LastName()
+        {
+           
+            return Json(db.Users.Select(e => e.LastName).Distinct(), JsonRequestBehavior.AllowGet);
+        } 
 
         protected override void Dispose(bool disposing)
         {

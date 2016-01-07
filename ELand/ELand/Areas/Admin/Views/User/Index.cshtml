@@ -1,20 +1,80 @@
 ﻿@using Kendo.Mvc;
 
 @{ViewBag.title = "UserList";}
+
 ﻿﻿@(Html.Kendo().Grid<ELand.Models.ApplicationUser>()
       .Name("grid")
       .Columns(columns =>
       {
-        columns.Bound(c => c.FirstName);
+          columns.Bound(c => c.FirstName).Filterable(f => f.UI("cityFilter"));
         columns.Bound(c => c.LastName);
         columns.Bound(c => c.Phone);
         columns.Bound(c => c.Skype);
         columns.Bound(c => c.Email);
+        columns.Template(x => { }).ClientTemplate(
+              "<a class='k-button' href='" +
+                  Url.Action("User_Details", "User") +
+                  "?Id=#= Id #'" +
+              ">Details</a><a class='k-button' href='" +
+                  Url.Action("User_Details", "User") +
+                  "?Id=#= Id #'" +
+              ">Delete</a>"
+          ).Width(200);
       })
+              .ToolBar(toolBar =>
+          {
+              toolBar.Custom().Text("Click me").Action("myAction", "myController");
+          }).Filterable(filterable => filterable
+        .Extra(false)
+        .Operators(operators => operators
+            .ForString(str => str.Clear()
+                .StartsWith("Starts with")
+                .IsEqualTo("Is equal to")
+                .IsNotEqualTo("Is not equal to")
+            ))
+        )   
+      .Editable(editable => editable.Mode(GridEditMode.PopUp))
       .Scrollable()
         .Sortable()
       .DataSource(dataSource => dataSource
           .Ajax()
+          .PageSize(20)
+          .Model(model => model.Id(p => p.Id))
+          .Create(update => update.Action("User_Create", "User"))
           .Read(read => read.Action("ApplicationUsers_Read", "User"))
+          .Update(update => update.Action("User_Create", "Grid"))
+          .Destroy(update => update.Action("User_Create", "Grid"))
+          
       )
+      
 )
+
+@section scripts{
+    
+<script type="text/javascript">
+    function cityFilter(element) {
+        element.kendoDropDownList({
+            dataSource: {
+                transport: {
+                    read: "@Url.Action("FirstName")"
+                }
+            },
+            optionLabel: "--Select Value--"
+        });
+    }
+
+    function titleFilter(element) {
+        element.kendoAutoComplete({
+            dataSource: {
+                transport: {
+                    read: "@Url.Action("LastName")"
+                }
+            }
+        });
+    }
+</script>
+
+
+    
+    
+    }
