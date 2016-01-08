@@ -18,15 +18,25 @@ namespace ELand.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
+            if (Request.IsAjaxRequest()) {
+
+                return PartialView();
+            }
             return View();
         }
         public ActionResult User_Create() {
-
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView();
+            }
             return View();
         }
         public ActionResult User_Details(string id) {
-
-            return View();
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(db.Users.FirstOrDefault(x => x.Id == id));
+            }
+            return View(db.Users.FirstOrDefault(x=>x.Id==id));
         }
         public ActionResult ApplicationUsers_Read([DataSourceRequest]DataSourceRequest request)
         {
@@ -60,6 +70,7 @@ namespace ELand.Areas.Admin.Controllers
         public ActionResult FirstName()
         {
            
+
             return Json(db.Users.Select(e => e.FirstName).Distinct(), JsonRequestBehavior.AllowGet);
         }
 
