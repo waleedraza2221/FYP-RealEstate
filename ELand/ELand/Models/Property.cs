@@ -22,7 +22,7 @@ namespace ELand.Models
         public virtual AreaUnit AreaUnit { get; set; }
         public int TypeID { get; set; }
         [ForeignKey("TypeID")]
-        public virtual Type Type { get; set; }
+        public virtual PType PType { get; set; }
         public int PurposeID { get; set; }
         [ForeignKey("PurposeID")]
         public virtual Purpose Purpose { get; set; }

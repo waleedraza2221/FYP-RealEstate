@@ -19,6 +19,7 @@ namespace ELand.Models
         public string Instagram { get; set; }
         public string Email { get; set; }
         public string Mobile { get; set; }
+        public string Image { get; set; }
         public virtual ICollection<ApplicationUser> Users { get; set; }
      }
 }

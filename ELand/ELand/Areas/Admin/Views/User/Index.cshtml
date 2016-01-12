@@ -11,31 +11,8 @@
         columns.Bound(c => c.Phone);
         columns.Bound(c => c.Skype);
         columns.Bound(c => c.Email);
-        columns.Template(x => {  }).ClientTemplate(
-     "<a href='" +
-                  Url.Action("User_Details", "User") +
-                  "?Id=#= Id #' " +
-              " class='btn btn-primary' data-ajax='true' data-ajax-loading='\\#loading' data-ajax-method='GET' data-ajax-mode='replace' data-ajax-update='\\#result' data-target='\\#myModal1' data-toggle='modal' >Details</a><a class='k-button' href='" +
-                  Url.Action("User_Details", "User") +
-                  "?Id=#= Id #' " +
-              ">Delete</a><form action='"+Url.Action("User_Details", "User") +
-                  "?Id=#= Id #'><input type='submit' value='Delete' onclick='return confirm(\"Are you sure you want to delete record with ID #= Id #\");' /></form>"
-           
-
-            ).Width(200);
-      })
-              .ToolBar(toolBar =>
-          {
-              toolBar.Template(@<text>
-                   @Ajax.RawActionLink("<span class='fa fa-plus'></span> Add Create", "User_Create", "User", null, new AjaxOptions
-              {
-                  HttpMethod = "GET",
-                  InsertionMode = InsertionMode.Replace,
-                  UpdateTargetId = "result",
-                  LoadingElementId = "loading"
-              }, new { role = "button", data_toggle = "modal", data_target = "#myModal", @class="btn btn-primary" })
-           </text>);
-          }).Filterable(filterable => filterable
+        columns.Command(command => {  command.Destroy(); }).Width(180);
+      }).Filterable(filterable => filterable
         .Extra(false)
         .Operators(operators => operators
             .ForString(str => str.Clear()
@@ -46,8 +23,9 @@
             ))
         )   
       .Editable(editable => editable.Mode(GridEditMode.PopUp))
-      .Scrollable()
-        .Sortable()
+      .Scrollable().HtmlAttributes(new { style = "height:430px;" })
+      .ClientDetailTemplateId("template")
+      .Sortable().Pageable()
       .DataSource(dataSource => dataSource
           .Ajax()
           .PageSize(20)
@@ -55,7 +33,7 @@
           .Create(update => update.Action("User_Create", "User"))
           .Read(read => read.Action("ApplicationUsers_Read", "User"))
           .Update(update => update.Action("User_Create", "Grid"))
-          .Destroy(update => update.Action("User_Create", "Grid"))
+          .Destroy(x => x.Action("User_Delete", "User"))
           
       )
       
@@ -67,9 +45,66 @@
 
 @section scripts{
     
+<script id="template" type="text/kendo-tmpl">
+  
+    @(Html.Kendo().TabStrip()
+                    .Name("tabStrip_#=Id#")
+            .SelectedIndex(0)
+            .Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+            .Items(items =>
+            {
+                items.Add().Text("Personal Information").Content(
+                    "<div style='margin-top:10px;'>"
+                       + "<ul class='nav navbar-list'>"
+                            + "<li><label>Id : </label>#= Id #</li>"
+                            + "<li><label>First Name : </label>#= FirstName #</li>"
+                            + "<li><label>Last Name : </label>#= LastName #</li>"
+                            + "<li><label>Email : </label>#= Email #</li>"
+                            + "<li><label>Skype : </label>#= Skype #</li>"
+                            + "<li><label>Phone :</label>#= Phone #</li>"
+                            + "<li><label>Twitter:</label>#= Twitter #</li>"
+                            + "<li><label>IsAgencyAdmin:</label> #if(IsAgencyAdmin){#Yes#}else{#No#}#</li>"
+                            + "<li><a href='" + Url.Action("Property_List", "User") + "?Id=#= Id #' class='btn btn-success' data-ajax='true' data-ajax-loading='\\#loading' data-ajax-method='GET' data-ajax-mode='replace' data-ajax-update='\\#res'>See All Properties</a></li>"
+                       + "</ul>"
+                    + "</div>"
+                );
+                @*items.Add().Text("Properties").Content(@<text>
+                    @(Html.Kendo().Grid<ELand.Models.Property>()
+                        .Name("grid_#=Id#") 
+                        .Columns(columns =>
+                        {
+                            columns.Bound(o => o.Id);
+                            columns.Bound(o => o.Title);
+                            columns.Template(x => { }).ClientTemplate("<a href='" +
+              Url.Action("PropertyDetail", "User") +
+                  "?PId=#= Id #'>Details</a>");
+                        }).Filterable(filterable => filterable
+        .Extra(false)
+        .Operators(operators => operators
+            .ForString(str => str.Clear()
+                .StartsWith("Starts with")
+                .IsEqualTo("Is equal to")
+                .IsNotEqualTo("Is not equal to")
+                .Contains("Contains")))) .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(5)
+                            .Read(read => read.Action("Property_List", "User", new { Id = "#=Id#" })))
+                            .Pageable()
+                            .Sortable()
+                            .ToClientTemplate())
+                </text>
+                );*@
+            }).ToClientTemplate())
+
+
+
+                    
+</script>
+
+
+
 <script type="text/javascript">
 
-    
     function nameFilter(element) {
         element.kendoAutoComplete({
             dataSource: {

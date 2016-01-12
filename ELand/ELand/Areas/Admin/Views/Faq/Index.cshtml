@@ -1,0 +1,55 @@
+﻿@{ViewBag.Title = "FAQ";}﻿﻿
+
+@(Html.Kendo().Grid<ELand.Models.Faq>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+        columns.Bound(c => c.Question);
+        columns.Bound(c => c.Answer);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(180);
+      })
+      .ToolBar(toolbar => {
+            toolbar.Create();
+            toolbar.Excel();
+            toolbar.Pdf();
+      }) 
+      .ColumnMenu()
+      .Editable(editable => editable.Mode(GridEditMode.PopUp))
+      .Pageable()
+      .Navigatable()
+      .Selectable(selectable => {
+            selectable.Mode(GridSelectionMode.Single);
+            selectable.Type(GridSelectionType.Row);
+      })
+      .Sortable(sortable => {
+          sortable.SortMode(GridSortMode.MultipleColumn);
+      })
+      .Filterable()
+      .Scrollable()
+      .Events(events => {
+            events.Remove("onRemove");
+            events.Save("onSave");
+      })
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.Id))
+          .Read(read => read.Action("Faq_Read", "Faq"))
+          .Create(create => create.Action("Faq_Create", "Faq"))
+          .Update(update => update.Action("Faq_Update", "Faq"))
+          .Destroy(destroy => destroy.Action("Faq_Destroy", "Faq"))
+      ).Editable(x=>x.Mode(GridEditMode.PopUp).TemplateName("Faq"))
+)
+
+<script>
+
+    function onRemove(e){
+        //Implement the event handler for Remove
+        $.notify("Deleted", "success");
+    }
+
+    function onSave(e){
+        //Implement the event handler for Save
+        $.notify("Saved", "success");
+    }
+
+</script>     

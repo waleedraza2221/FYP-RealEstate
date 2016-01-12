@@ -54,7 +54,7 @@ namespace ELand.Models
         public DbSet<AccountType> AccountType { get; set; }
         public DbSet<AreaUnit> AreaUnit { get; set; }
         public DbSet<Purpose> Purpose { get; set; }
-        public DbSet<Type> Type { get; set; }
+        public DbSet<PType> PType { get; set; }
         public DbSet<Contact> Contact { get; set; }
         public DbSet<Faq> Faq { get; set; }
         public static ApplicationDbContext Create()

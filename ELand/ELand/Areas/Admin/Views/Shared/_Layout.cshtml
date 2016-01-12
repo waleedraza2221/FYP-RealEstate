@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using ELand.Models;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -36,44 +37,29 @@
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
+                        @{
+                            ApplicationDbContext db = new ApplicationDbContext();
+                            var lst = db.Contact.Where(x => x.IsRead == false).ToList();
+                            foreach (var item in lst)
+                            {
+                                <li>
+                                    <a href="@Url.Action("IsSeen", "Contact", new { area="Admin",Id=item.Id})">
+                                        <div>
+                                            <strong>@item.Name</strong>
+                                            <span class="pull-right text-muted">
+                                                <em>@item.Phone</em>
+                                            </span>
+                                        </div>
+                                        <div>@item.Message</div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+
+                            }
+
+                            }
                         <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
+                            <a class="text-center" href="@Url.Action("Index", "Contact", new { area="Admin"})">
                                 <strong>Read All Messages</strong>
                                 <i class="fa fa-angle-right"></i>
                             </a>
@@ -350,7 +336,9 @@
             <!-- /.navbar-static-side -->
         </nav>
         <div id="page-wrapper">
+          <div id="res">
          @RenderBody()
+              </div>
         </div>
         <!-- /#page-wrapper -->
     </div>
@@ -370,7 +358,7 @@
 
     <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
-        <div id="loading" style="display:none;">
+        <div id="loading1" style="display:none;">
             <img src="~/Images/load.GIF" />
         </div>
         <div id="result">

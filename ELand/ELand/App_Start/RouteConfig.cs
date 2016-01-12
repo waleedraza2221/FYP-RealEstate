@@ -20,6 +20,7 @@ namespace ELand
                 namespaces: new[] { "Eland.Controllers" }
                 
             );
+            routes.MapRoute(name: "signin-google", url: "signin-google", defaults: new { controller = "Account", action = "LoginCallback" });
         }
     }
 }

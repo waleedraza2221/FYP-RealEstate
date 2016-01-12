@@ -41,7 +41,7 @@ namespace ELand
                "~/Content/AdminTheme/css/metisMenu.css"));
             bundles.Add(new ScriptBundle("~/Scripts/AdminJs").Include(
                 "~/Content/AdminTheme/js/sb-admin-2.js",
-                "~/Content/AdminTheme/js/metisMenu.min.js"));
+                "~/Content/AdminTheme/js/metisMenu.min.js", "~/Scripts/notify.min.js"));
             //Bundle For Kendo
             bundles.Add(new ScriptBundle("~/Scripts/Kendo").Include(
                "~/Scripts/kendo/js/jszip.min.js", 

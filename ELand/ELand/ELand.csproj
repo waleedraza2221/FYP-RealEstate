@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44302</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -163,7 +163,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AreaUnitController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FaqController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PurposeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -172,6 +177,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CustomAjaxHelper.cs" />
+    <Compile Include="Helper\Utility.cs" />
     <Compile Include="Migrations\201512301616340_InitialCreate.cs" />
     <Compile Include="Migrations\201512301616340_InitialCreate.Designer.cs">
       <DependentUpon>201512301616340_InitialCreate.cs</DependentUpon>
@@ -179,6 +185,18 @@
     <Compile Include="Migrations\201512310602362_Contact.cs" />
     <Compile Include="Migrations\201512310602362_Contact.Designer.cs">
       <DependentUpon>201512310602362_Contact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601090616409_RenameType.cs" />
+    <Compile Include="Migrations\201601090616409_RenameType.Designer.cs">
+      <DependentUpon>201601090616409_RenameType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601090754095_RenameType1.cs" />
+    <Compile Include="Migrations\201601090754095_RenameType1.Designer.cs">
+      <DependentUpon>201601090754095_RenameType1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601100758406_update.cs" />
+    <Compile Include="Migrations\201601100758406_update.Designer.cs">
+      <DependentUpon>201601100758406_update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
@@ -188,10 +206,11 @@
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Faq.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IndividualViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\Purpose.cs" />
-    <Compile Include="Models\Type.cs" />
+    <Compile Include="Models\PType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -589,6 +608,18 @@
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <Content Include="Areas\Admin\Views\User\User_Create.cshtml" />
     <Content Include="Areas\Admin\Views\User\User_Details.cshtml" />
+    <Content Include="Areas\Admin\Views\User\PropertyDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Property_List.cshtml" />
+    <Content Include="Areas\Admin\Views\Type\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Type\EditorTemplates\pType.cshtml" />
+    <Content Include="Areas\Admin\Views\AreaUnit\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AreaUnit\EditorTemplates\AreaUnit.cshtml" />
+    <Content Include="Areas\Admin\Views\Purpose\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Purpose\EditorTemplates\Purpose.cshtml" />
+    <Content Include="Areas\Admin\Views\Faq\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Faq\EditorTemplates\Faq.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\IsSeen.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\data-ajax.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
@@ -758,6 +789,7 @@
     <Content Include="Scripts\kendo\js\kendo.window.min.js" />
     <Content Include="Scripts\kendo\js\pako_deflate.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -927,10 +959,18 @@
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
     <Content Include="Video\showcase.webm" />
+    <Content Include="Views\Account\RegisterChoose.cshtml" />
+    <Content Include="Views\Account\SignIn.cshtml" />
+    <Content Include="Views\Account\RegisterIndividual.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Views\AreaUnit\" />
+    <Folder Include="Views\Contact\" />
+    <Folder Include="Views\Faq\" />
+    <Folder Include="Views\Purpose\" />
+    <Folder Include="Views\Type\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
@@ -946,6 +986,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512310602362_Contact.resx">
       <DependentUpon>201512310602362_Contact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601090616409_RenameType.resx">
+      <DependentUpon>201601090616409_RenameType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601090754095_RenameType1.resx">
+      <DependentUpon>201601090754095_RenameType1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601100758406_update.resx">
+      <DependentUpon>201601100758406_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -966,7 +1015,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>21991</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:21991/</IISUrl>
+          <IISUrl>https://localhost:44302/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

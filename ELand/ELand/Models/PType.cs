@@ -5,9 +5,9 @@ using System.Web;
 
 namespace ELand.Models
 {
-    public class Type
+    public class PType
     {
-        public Type() { 
+        public PType() { 
         
         this.Properties=new HashSet<Property>();
         }

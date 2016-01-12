@@ -1,0 +1,45 @@
+﻿@{ViewBag.Title = "Messages";}﻿﻿
+
+@(Html.Kendo().Grid<ELand.Models.Contact>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+        columns.Bound(c => c.Name);
+        columns.Bound(c => c.Email);
+        columns.Bound(c => c.Phone);
+        columns.Bound(c => c.Message);
+        columns.Bound(c => c.IsRead);
+        columns.Command(command => {command.Destroy(); }).Width(180);
+      })
+      .ColumnMenu()
+      .Editable(editable => editable.Mode(GridEditMode.PopUp))
+      .Pageable()
+      .Navigatable()
+      .Selectable(selectable => {
+            selectable.Mode(GridSelectionMode.Single);
+            selectable.Type(GridSelectionType.Row);
+      })
+      .Sortable(sortable => {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      })
+      .Filterable()
+      .Scrollable()
+      .Events(events => {
+            events.Remove("onRemove");
+      })
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.Id))
+          .Read(read => read.Action("Contact_Read", "Contact"))
+          .Destroy(destroy => destroy.Action("Contact_Destroy", "Contact"))
+      )
+)
+
+<script>
+
+    function onRemove(e){
+        //Implement the event handler for Remove
+        $.notify("Removed", "success");
+    }
+
+</script>     

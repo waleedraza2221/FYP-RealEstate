@@ -1,0 +1,54 @@
+﻿@{ViewBag.Title = "Purpose";}﻿﻿
+
+@(Html.Kendo().Grid<ELand.Models.Purpose>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+        columns.Bound(c => c.Title);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(180);
+      })
+      .ToolBar(toolbar => {
+            toolbar.Create();
+            toolbar.Excel();
+            toolbar.Pdf();
+      }) 
+      .ColumnMenu()
+      .Editable(editable => editable.Mode(GridEditMode.PopUp))
+      .Pageable()
+      .Navigatable()
+      .Selectable(selectable => {
+            selectable.Mode(GridSelectionMode.Single);
+            selectable.Type(GridSelectionType.Row);
+      })
+      .Sortable(sortable => {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      })
+      .Filterable()
+      .Scrollable()
+      .Events(events => {
+            events.Remove("onRemove");
+            events.Save("onSave");
+      })
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.Id))
+          .Read(read => read.Action("Purpose_Read", "Purpose"))
+          .Create(create => create.Action("Purpose_Create", "Purpose"))
+          .Update(update => update.Action("Purpose_Update", "Purpose"))
+          .Destroy(destroy => destroy.Action("Purpose_Destroy", "Purpose"))
+      ).Editable(x=>x.Mode(GridEditMode.PopUp).TemplateName("Purpose"))
+)
+
+<script>
+
+    function onRemove(e){
+        //Implement the event handler for Remove
+        $.notify("Deleted", "success");
+    }
+
+    function onSave(e){
+        //Implement the event handler for Save
+        $.notify("Saved", "success");
+    }
+
+</script>     

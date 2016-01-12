@@ -1,21 +1,26 @@
-﻿﻿using System;
+﻿﻿using ELand.Models;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
-using ELand.Models;
 
 namespace ELand.Areas.Admin.Controllers
 {
     public class UserController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
         public ActionResult Index()
         {
             if (Request.IsAjaxRequest()) {
@@ -38,6 +43,19 @@ namespace ELand.Areas.Admin.Controllers
             }
             return View(db.Users.FirstOrDefault(x=>x.Id==id));
         }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult User_Delete([DataSourceRequest]DataSourceRequest request, ApplicationUser user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Users.Remove(db.Users.FirstOrDefault(x=>x.Id==user.Id));
+                db.SaveChanges();
+            }
+
+            return Json(new[] { user }.ToDataSourceResult(request, ModelState));
+        }
+
         public ActionResult ApplicationUsers_Read([DataSourceRequest]DataSourceRequest request)
         {
             IQueryable<ApplicationUser> applicationusers = db.Users;
@@ -64,6 +82,24 @@ namespace ELand.Areas.Admin.Controllers
             });
 
             return Json(result);
+        }
+
+        public ActionResult Property_List(string Id)
+        {
+            if (Request.IsAjaxRequest()) {
+                return PartialView();
+            }
+            return View();
+        }
+
+        public ActionResult PropertyDetail(int Id) {
+            if (Request.IsAjaxRequest()) {
+
+                return PartialView();
+            
+            }
+
+            return View();
         }
 
 

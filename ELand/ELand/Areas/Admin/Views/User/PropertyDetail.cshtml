@@ -1,0 +1,240 @@
+﻿@model ELand.Models.Property
+
+@{
+    ViewBag.Title = "PropertyDetail";
+}
+
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AreaUnit.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AreaUnit.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Purpose.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Purpose.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Latitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Longitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Longitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MainImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MainImage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GalleryImages)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GalleryImages)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kitchen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kitchen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Garage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Garage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pool)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pool)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Air_Conditioning)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Air_Conditioning)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fridge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fridge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kitchen_With_Island)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kitchen_With_Island)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADSL_Cable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADSL_Cable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Grill)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grill)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Exotic_Garden)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exotic_Garden)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WiFi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WiFi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Full_HD_TV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Full_HD_TV)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Guest_House)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Guest_House)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HiFi_Audio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HiFi_Audio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Digital_Antenna)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Digital_Antenna)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

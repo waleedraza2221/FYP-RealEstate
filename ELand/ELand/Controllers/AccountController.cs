@@ -40,6 +40,46 @@ namespace ELand.Controllers
             }
         }
 
+        [AllowAnonymous]
+        public ActionResult SignIn()
+        {
+
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult RegisterIndividual()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+       public async Task<ActionResult> RegisterIndividual(IndividualViewModel model)
+        {
+            if (ModelState.IsValid) {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,Phone=model.Phone,Skype=model.Skype,Twitter=model.Twitter,Instagram=model.Instagram,FirstName=model.FirstName,LastName=model.LastName,PhoneNumber=model.Phone };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Login", "Account", new { returnUrl = "Home/Index" });
+                }
+                AddErrors(result);
+            }
+
+            return View(model);
+        }
+
+
+
         public ApplicationUserManager UserManager
         {
             get
@@ -72,7 +112,7 @@ namespace ELand.Controllers
             {
                 return View(model);
             }
-
+      
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -133,6 +173,12 @@ namespace ELand.Controllers
                     return View(model);
             }
         }
+        [AllowAnonymous]
+        public ActionResult RegisterChoose() {
+
+            return View();
+        }
+
 
         //
         // GET: /Account/Register

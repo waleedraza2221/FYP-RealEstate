@@ -54,15 +54,15 @@ namespace ELand
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+          app.UseFacebookAuthentication(
+            appId: "156103534759903",
+           appSecret: "20416e41e6434b2400e7f552b7c1ff5e");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+           //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+           // {
+           //     ClientId = "703157499691-1t4h6ffde9ei6nvmjbuarmac51i3beu8.apps.googleusercontent.com",
+           //     ClientSecret = "ZyBDsJyYLs9fqunkVE5FUI7i"
+           //});
         }
     }
 }
