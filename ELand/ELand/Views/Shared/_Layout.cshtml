@@ -397,7 +397,7 @@
                         <li class="dropdown">
                             <a href="properties.html">Properties<span class="caret ct-menu--arrow"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="pricing.html">Pricing Tables</a></li>
+                                <li><a href="@Url.Action("Add_Property","Property")">Add Property</a></li>
                                 <li class="dropdown-submenu">
                                     <a href="gallery1.html">Gallery</a>
                                     <ul class="dropdown-menu">
@@ -473,8 +473,9 @@
                 <div class="ct-shapeBottom"></div>
             </div>
         </nav>
-       
-        @RenderBody()
+        <div id="result">
+            @RenderBody()
+        </div>
 
         <footer>
             <div class="ct-footer--extended ct-u-paddingBoth60">
@@ -659,7 +660,7 @@
 
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/Myfiles")
-    
+    @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
 
 

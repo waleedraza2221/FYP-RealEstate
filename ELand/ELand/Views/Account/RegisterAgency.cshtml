@@ -1,0 +1,121 @@
+﻿@model ELand.Models.AgencyViewModel
+
+@{
+    ViewBag.Title = "Register Agency";
+}
+
+
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <form action="@Url.Action("RegisterAgency", "Account")" method="post" role="form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <div class="ct-form--label--type2">
+                        <div class="ct-u-displayTableVertical">
+                            <div class="ct-u-displayTableCell">
+                                <div class="ct-input-group-btn">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-user"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="ct-u-displayTableCell text-center">
+                                <span class="text-uppercase">Register an Agency</span>
+                            </div>
+                        </div>
+                    </div>
+                  <div class="row">
+                      @Html.ValidationSummary("", new { @class = "text-danger" })
+                      <div class="col-md-6">
+                          <label>First Name</label>
+                          @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control input-lg", required = "required" })
+
+                      </div>
+                      <div class="col-md-6">
+                          <label>Last Name</label>
+                          @Html.TextBoxFor(x => x.LastName, new { @class = "form-control input-lg", required = "required" })
+                      </div>
+                  </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Title</label>
+                            @Html.TextBoxFor(x => x.Title, new { @class = "form-control input-lg", required = "required" })
+                        </div>
+                        <div class="col-md-6">
+                            <label>Description</label>
+                            @Html.TextBoxFor(x => x.Description, new { @class = "form-control input-lg", required = "required" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Email</label>
+                            @Html.TextBoxFor(x => x.Email, new { @class = "form-control input-lg", required = "required" })
+                        </div>
+                  
+                    </div>
+                 <div class="row">
+                     <div class="col-md-6">
+                         <label>Password</label>
+                         @Html.PasswordFor(x => x.Password, new { @class = "form-control input-lg", required = "required" })
+                     </div>
+                     <div class="col-md-6">
+                         <label>Confirm Password</label>
+                         @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control input-lg", required = "required" })
+                     </div>
+                 
+                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Phone</label>
+                        @Html.TextBoxFor(x => x.Mobile, new { @class = "form-control input-lg", required = "required" })
+                    </div>
+                    <div class="col-md-6">
+                        <label>Skype</label>
+                        @Html.TextBoxFor(x => x.Skype, new { @class = "form-control input-lg" })
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Facebook</label>
+                            @Html.TextBoxFor(x => x.Facebook, new { @class = "form-control input-lg" })
+                        </div>
+                        <div class="col-md-6">
+                            <label>Twitter</label>
+                            @Html.TextBoxFor(x => x.Twitter, new { @class = "form-control input-lg" })
+                        </div>
+                    </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <label>Instagram</label>
+                          @Html.TextBoxFor(x => x.Instagram, new { @class = "form-control input-lg" })
+                      </div> 
+                      <div class="col-md-6">
+                          <label>Profile Image</label>
+                          <input type="file" accept="image/*" class="form-control" name="pimage" />
+                      </div>
+                  </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Agency Image</label>
+                            <input type="file" accept="image/*" class="form-control" name="timage" />
+                        </div>
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="" required>
+                                I read and agree to<a href="#"> terms &amp; conditions</a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="ct-form--item">
+                        <button type="submit" class="btn btn-warning center-block">Register Now</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

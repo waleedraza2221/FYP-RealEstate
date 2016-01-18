@@ -24,7 +24,7 @@ namespace ELand
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/Theme/bootstrap.css",
                       "~/Content/Theme/style.css"));
             bundles.Add(new ScriptBundle("~/Scripts/Myfiles").Include(
                 "~/Scripts/js/dependencies.js",
@@ -33,7 +33,8 @@ namespace ELand
                 "~/Scripts/js/contact-form.js",
                 "~/Scripts/js/ct-mediaSection/jquery.stellar.min.js",
                 "~/Scripts/js/owl/owl.carousel.min.js",
-                "~/Scripts/js/main.js"));
+                "~/Scripts/js/main.js",
+                "~/Scripts/data-ajax.js"));
             bundles.Add(new StyleBundle("~/Content/Admin").Include(
                "~/Content/bootstrap.css",
                "~/Content/AdminTheme/css/sb-admin-2.css",

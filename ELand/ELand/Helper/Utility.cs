@@ -12,7 +12,7 @@ namespace ELand.Helper
         public static Task SendAsync(string FromUser, string ToUser, string subject, string body)
         { 
             var result = Task.FromResult(0);
-            var toAddress = new System.Net.Mail.MailAddress(ToUser, ToUser);
+            var toAddress = new System.Net.Mail.MailAddress(FromUser, FromUser);
 
 
             try
@@ -20,10 +20,10 @@ namespace ELand.Helper
 
                 System.Net.Mail.MailMessage emessage = new System.Net.Mail.MailMessage();
 
-                string Username = "king57007@gmail.com";
-                string Password = "ownpassword";
-                string port = "465";
-                string SmptServer = "smtp.gmail.com";
+                string Username = "admin@wr-itc.com";
+                string Password = "Waleed123!";
+                string port = "567";
+                string SmptServer = "md-67.webhostbox.net";
 
 
                 emessage.To.Add(toAddress);
@@ -38,14 +38,16 @@ namespace ELand.Helper
                 sc.UseDefaultCredentials = false;
                 sc.Credentials = netCredential;
                 sc.Port = Convert.ToInt32(port);
+             
                 sc.Send(emessage);
 
 
 
                 result = Task.FromResult(1);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                var x = e;
                 result = Task.FromResult(0);
             }
 
@@ -55,6 +57,8 @@ namespace ELand.Helper
 
         }
 
+
+       
 
     }
 }

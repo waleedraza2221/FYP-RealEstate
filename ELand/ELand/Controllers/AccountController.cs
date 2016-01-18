@@ -17,17 +17,15 @@ namespace ELand.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext db = new ApplicationDbContext();
         public AccountController()
         {
         }
-
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
-
         public ApplicationSignInManager SignInManager
         {
             get
@@ -55,31 +53,100 @@ namespace ELand.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-       public async Task<ActionResult> RegisterIndividual(IndividualViewModel model)
+       public async Task<ActionResult> RegisterIndividual(IndividualViewModel model,HttpPostedFileBase pimage)
         {
             if (ModelState.IsValid) {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,Phone=model.Phone,Skype=model.Skype,Twitter=model.Twitter,Instagram=model.Instagram,FirstName=model.FirstName,LastName=model.LastName,PhoneNumber=model.Phone };
+                string img = "";
+                if (pimage != null)
+                {
+                    Guid g;
+                    g = Guid.NewGuid();
+                   img = System.IO.Path.GetFileName(pimage.FileName);
+                    img = g + img;
+                    /*Saving the file in server folder*/
+                    pimage.SaveAs(Server.MapPath("~/Images/Profile/" + img));
+                }
+                else
+                {
+                    img="ProfileImage.jpg";
+                }
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,Phone=model.Phone,Skype=model.Skype,Twitter=model.Twitter,Instagram=model.Instagram,FirstName=model.FirstName,LastName=model.LastName,PhoneNumber=model.Phone,ProfileImage=img };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                  
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
                     return RedirectToAction("Login", "Account", new { returnUrl = "Home/Index" });
                 }
                 AddErrors(result);
             }
-
             return View(model);
         }
+        [AllowAnonymous]
+        public ActionResult RegisterAgency(){
 
+        return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<ActionResult> RegisterAgency(AgencyViewModel model, HttpPostedFileBase pimage,HttpPostedFileBase timage)
+        {
 
-
+            if (ModelState.IsValid)
+            {
+                string pimg = "";
+                string timg = "";
+                if (pimage != null)
+                {
+                    pimg = Guid.NewGuid() + System.IO.Path.GetFileName(pimage.FileName);
+                    /*Saving the file in server folder*/
+                    pimage.SaveAs(Server.MapPath("~/Images/Profile/" + pimg));
+                }
+                else
+                {
+                    pimg = "ProfileImage.jpg";
+                }
+                if (timage != null)
+                {
+                    timg = Guid.NewGuid() + System.IO.Path.GetFileName(timage.FileName);
+                    /*Saving the file in server folder*/
+                    timage.SaveAs(Server.MapPath("~/Images/Agency/" + timg));
+                }
+                else
+                {
+                    timg = "AgencyImage.png";
+                }
+                //Save Agency In Database
+                Agency ag = new Agency()
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    Email = model.Email,
+                    Facebook = model.Facebook,
+                    Image = timg,
+                    Instagram = model.Instagram,
+                    Mobile = model.Mobile,
+                    Skype = model.Skype,
+                    Twitter = model.Twitter
+                };
+                db.Agency.Add(ag);
+                db.SaveChanges();
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Phone = model.Mobile, Skype = model.Skype, Twitter = model.Twitter, Instagram = model.Instagram, FirstName = model.FirstName, LastName = model.LastName, PhoneNumber = model.Mobile, ProfileImage = pimg, IsAgencyAdmin = true, AgencyId = db.Agency.FirstOrDefault(x => x.Email == model.Email).Id };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Login", "Account", new { returnUrl = "Home/Index" });
+                }
+                AddErrors(result);
+            }
+         return View(model);
+        }
         public ApplicationUserManager UserManager
         {
             get

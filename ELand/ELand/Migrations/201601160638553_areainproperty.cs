@@ -1,0 +1,18 @@
+namespace ELand.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class areainproperty : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.Properties", "Area", c => c.String());
+        }
+        
+        public override void Down()
+        {
+            DropColumn("dbo.Properties", "Area");
+        }
+    }
+}

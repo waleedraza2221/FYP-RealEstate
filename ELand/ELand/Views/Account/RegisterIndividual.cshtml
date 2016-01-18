@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 pull-right">
-                <form action="@Url.Action("RegisterIndividual", "Account")" method="post" role="form" class="ct-formRegister pull-right">
+                <form action="@Url.Action("RegisterIndividual", "Account")" enctype="multipart/form-data" method="post" role="form" class="ct-formRegister pull-right">
                     <div class="form-group">
                         <div class="ct-form--label--type2">
                             <div class="ct-u-displayTableVertical">
@@ -68,6 +68,10 @@
                         <div class="ct-form--item ct-u-marginBottom20">
                             <label>Instagram</label>
                             @Html.TextBoxFor(x => x.Instagram, new { @class = "form-control input-lg"})
+                        </div>
+                        <div class="ct-form--item ct-u-marginBottom20">
+                            <label>Profile Image</label>
+                            <input type="file" accept="image/*" class="form-control" name="pimage" />
                         </div>
                         <div class="ct-form--item ct-u-marginBottom20">
                             <div class="checkbox">

@@ -16,7 +16,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>44302</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -173,6 +174,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -198,10 +200,19 @@
     <Compile Include="Migrations\201601100758406_update.Designer.cs">
       <DependentUpon>201601100758406_update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601130606133_ImageInProfile.cs" />
+    <Compile Include="Migrations\201601130606133_ImageInProfile.Designer.cs">
+      <DependentUpon>201601130606133_ImageInProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601160638553_areainproperty.cs" />
+    <Compile Include="Migrations\201601160638553_areainproperty.Designer.cs">
+      <DependentUpon>201601160638553_areainproperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Agency.cs" />
+    <Compile Include="Models\AgencyViewModel.cs" />
     <Compile Include="Models\AreaUnit.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Faq.cs" />
@@ -209,6 +220,9 @@
     <Compile Include="Models\IndividualViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Property.cs" />
+    <Compile Include="Models\PropertySteps\Step1.cs" />
+    <Compile Include="Models\PropertySteps\Step2.cs" />
+    <Compile Include="Models\PropertySteps\Step3.cs" />
     <Compile Include="Models\Purpose.cs" />
     <Compile Include="Models\PType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -562,16 +576,19 @@
     <Content Include="Content\kendo\css\Uniform\sprite_kpi.png" />
     <Content Include="Content\kendo\css\Uniform\sprite_kpi_2x.png" />
     <Content Include="Content\AdminTheme\css\metisMenu.css" />
+    <Content Include="Content\Theme\bootstrap.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Agency\AgencyImage.png" />
     <Content Include="Images\load.GIF" />
     <Content Include="Images\logo.png" />
     <Content Include="Content\Theme\style.css" />
     <Content Include="Images\MainPage\logo.png" />
     <Content Include="Images\MainPage\megamenu-image.jpg" />
+    <Content Include="Images\Profile\ProfileImage.jpg" />
     <Content Include="Images\Sliders\header-slider-1.jpg" />
     <Content Include="Images\Sliders\header-slider-3.jpg" />
     <Content Include="Images\Sliders\logo-slider.png" />
@@ -962,6 +979,10 @@
     <Content Include="Views\Account\RegisterChoose.cshtml" />
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Account\RegisterIndividual.cshtml" />
+    <Content Include="Views\Account\RegisterAgency.cshtml" />
+    <Content Include="Views\Property\Add_Property.cshtml" />
+    <Content Include="Views\Property\Step2.cshtml" />
+    <Content Include="Views\Property\Step3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -996,6 +1017,12 @@
     <EmbeddedResource Include="Migrations\201601100758406_update.resx">
       <DependentUpon>201601100758406_update.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601130606133_ImageInProfile.resx">
+      <DependentUpon>201601130606133_ImageInProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601160638553_areainproperty.resx">
+      <DependentUpon>201601160638553_areainproperty.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1015,7 +1042,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>21991</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44302/</IISUrl>
+          <IISUrl>http://localhost:21991/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

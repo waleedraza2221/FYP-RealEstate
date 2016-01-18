@@ -1,0 +1,97 @@
+﻿@model ELand.Models.PropertySteps.Step2
+@{
+    ViewBag.Title = "Step2";
+}
+
+
+<div class="ct-site--map">
+    <div class="container">
+        <a href="index.html">Home</a>
+        <a href="faq.html">Submit Property</a>
+        <a href="faq.html">Step 2</a>
+    </div>
+</div>
+<header class="ct-mediaSection" data-stellar-background-ratio="0.3" data-height="140" data-type="parallax" data-bg-image="assets/images/demo-content/agency-parallax.jpg" data-bg-image-mobile="assets/images/demo-content/agency-parallax.jpg" style="min-height: 140px; height: 140px; background-image: url(&quot;assets/images/demo-content/agency-parallax.jpg&quot;); background-position: 50% 50%;">
+    <div class="ct-mediaSection-inner">
+        <div class="container">
+            <div class="ct-steps--submission center-block ct-u-marginBottom20">
+                <div class="ct-steps--item ct-steps--progress">
+                    <div class="ct-steps--counter">
+                        <span>1</span>
+                    </div>
+                </div>
+                <div class="ct-steps--item">
+                    <div class="ct-steps--counter ct-steps--active">
+                        <span>2</span>
+                    </div>
+                </div>
+                <div class="ct-steps--item">
+                    <div class="ct-steps--counter">
+                        <span>3</span>
+                    </div>
+                </div>
+                <div class="ct-steps--item">
+                    <div class="ct-steps--counter">
+                        <span>4</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ct-u-displayTable ct-steps--title text-center">
+                <div class="ct-u-displayTableCell">
+                    <span>Title</span>
+                </div>
+                <div class="ct-u-displayTableCell">
+                    <span>Images</span>
+                </div>
+                <div class="ct-u-displayTableCell">
+                    <span>Price &amp; Amentities</span>
+                </div>
+                <div class="ct-u-displayTableCell">
+                    <span>Done!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="ct-u-paddingTop50 ct-u-paddingBottom100">
+    <div class="container">
+        <div class="ct-headerText--normal text-uppercase ct-u-marginBottom40">
+            <h2>
+                Step 2 <span class="ct-text--highlightGray">Add images</span>
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-lg-6">
+                <form action="@Url.Action("Step3","Property")" method="post"  role="form" class="ct-formSubmission" enctype="multipart/form-data">
+                    <div class="form-group ">
+                        <label class="ct-fw-600 text-uppercase ct-u-marginBottom10">Upload featured image</label>
+                        <div class="row ct-u-marginBottom20">
+                            <div class="col-md-12">
+                                <input type="file" class="form-control input-lg ct-input--border" name="MainImage"  accept="image/*" />
+                          </div>
+                        </div>
+                        <span class="ct-u-marginBottom40">This is going to be the main image of property, it will be shown in thumbnails and all important places.</span>
+                        <label class="ct-fw-600 text-uppercase ct-u-marginBottom10">upload images to gallery</label>
+                        <div class="row ct-u-marginBottom20">
+                            <div class="col-md-12">
+                                <input type="file" class="form-control input-lg ct-input--border" name="GalleryImages" multiple accept="image/*" />
+                                </div>
+                        </div>
+                        <span class="ct-u-marginBottom40">This is going to be the main image of property, it will be shown in thumbnails and all important places.</span>
+                       <div class="ct-container--Big">
+                            <a class="btn btn-link pull-left" data-ajax="#result" href="@Url.Action("Add_Property","Property")">Back to Step 1</a>
+                            <button type="submit" class="btn btn-warning pull-right">Continue to Step 3</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    
+    
+    }

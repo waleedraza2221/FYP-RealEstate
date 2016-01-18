@@ -3,22 +3,28 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ELand.Models
 {
-    public class IndividualViewModel
+    public class AgencyViewModel
     {
+        public int Id { get; set; }
+        [Required]
+        [Remote("IsExist","Home",ErrorMessage="Agency Already Exist")]
+        public string Title { get; set; }
+        [Required]
+        public string Description { get; set; }
+        public string Skype { get; set; }
+        public string Facebook { get; set; }
+        public string Twitter { get; set; }
+        public string Instagram { get; set; }
+        public string Mobile { get; set; }
+        public string Image { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        [Required]
-        [RegularExpression(@"(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})",ErrorMessage="Please Enter Valid Phone Number")]
-        public string Phone { get; set; }
-        public string Skype { get; set; }
-        public string Twitter { get; set; }
-        public string Instagram { get; set; }
-        public string Facebook { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -30,8 +36,9 @@ namespace ELand.Models
         public string Password { get; set; }
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
         public string ProfileImage { get; set; }
 
     }

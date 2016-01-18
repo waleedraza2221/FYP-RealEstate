@@ -1,32 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace ELand.Models
+namespace ELand.Models.PropertySteps
 {
-    public class Property
+    public class Step3
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Address { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
-        public string MainImage { get; set; }
-        public string GalleryImages { get; set; }
-        public string Area { get; set; }
         public string Price { get; set; }
+        public string Area { get; set; }
         public int AreaID { get; set; }
-        [ForeignKey("AreaID")]
-        public virtual AreaUnit AreaUnit { get; set; }
         public int TypeID { get; set; }
-        [ForeignKey("TypeID")]
-        public virtual PType PType { get; set; }
         public int PurposeID { get; set; }
-        [ForeignKey("PurposeID")]
-        public virtual Purpose Purpose { get; set; }
         public int Bed { get; set; }
         public int Bath { get; set; }
         public int Kitchen { get; set; }
@@ -43,11 +28,5 @@ namespace ELand.Models
         public bool Guest_House { get; set; }
         public bool HiFi_Audio { get; set; }
         public bool Digital_Antenna { get; set; }
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public ApplicationUser User { get; set; }
-        
-
-
     }
 }
