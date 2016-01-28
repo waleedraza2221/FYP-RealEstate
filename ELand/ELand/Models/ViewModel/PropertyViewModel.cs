@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ELand.Models.PropertySteps
+namespace ELand.Models.ViewModel
 {
-    public class Step2
+    public class PropertyViewModel
     {
-        public string Price { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Address { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
+        public string MainImage { get; set; }
+        public List<string> GalleryImages { get; set; }
         public string Area { get; set; }
+        public string Price { get; set; }
         public int AreaID { get; set; }
         public int TypeID { get; set; }
         public int PurposeID { get; set; }
@@ -28,5 +36,7 @@ namespace ELand.Models.PropertySteps
         public bool Guest_House { get; set; }
         public bool HiFi_Audio { get; set; }
         public bool Digital_Antenna { get; set; }
+        public string UserId { get; set; }
+      
     }
 }

@@ -18,6 +18,7 @@ namespace ELand.Models
         public string GalleryImages { get; set; }
         public string Area { get; set; }
         public string Price { get; set; }
+        public string State { get; set; }
         public int AreaID { get; set; }
         [ForeignKey("AreaID")]
         public virtual AreaUnit AreaUnit { get; set; }

@@ -5587,9 +5587,9 @@ form input {
 .form-control {
   font-size: 14px;
   line-height: 1.2;
-  border: 2px solid #5c5c5c;
+  border: 1px solid #E6E6E6;
   border-radius: 3px;
-  background-color: #333333;
+  background-color: #FFFFFF;
   box-shadow: none;
   color: #999999;
   display: inline-block;
