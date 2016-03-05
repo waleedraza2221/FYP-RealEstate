@@ -58,6 +58,7 @@ namespace ELand.Models
         public DbSet<PType> PType { get; set; }
         public DbSet<Contact> Contact { get; set; }
         public DbSet<Faq> Faq { get; set; }
+        public DbSet<City> Cities { get; set; }
         public static ApplicationDbContext Create()
         {
 

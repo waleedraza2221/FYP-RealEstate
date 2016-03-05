@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "PropertyList";
+}
+
+@(Html.Kendo().Grid<ELand.Models.ViewModels.ViewProperty>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+          columns.Bound(c => c.MainImage).Title("Img").ClientTemplate(@"<img width='50' height='50' src='../Images/Property/#: GlobalId #/#:MainImage #' />").Width(80).Sortable(false).Filterable(false);
+          columns.Bound(c => c.Title);
+          columns.Bound(c => c.City);
+          columns.Bound(p => p.Id).ClientTemplate(
+    "<a class='btn btn-primary' href='" +
+        Url.Action("Edit", "Property") +
+        "/#= Id #'" +
+    ">Edit</a><a class='btn btn-primary' href='Property/Index/#= Id #'" +
+    ">Details</a>"
+).Width(100).Title("").Filterable(false).Sortable(false);
+          columns.Command(command => {command.Destroy(); }).Width(180);
+      })
+      .ToolBar(toolbar =>
+      {
+          toolbar.Template(@<text>
+            <a href="@Url.Action("Create","Property")" class="btn btn-primary">Add Property</a>
+        </text>);
+
+
+          toolbar.Excel();
+          toolbar.Pdf();
+      })
+      .ColumnMenu()
+      
+      .Pageable()
+      .Navigatable()
+      .Selectable(selectable =>
+      {
+          selectable.Mode(GridSelectionMode.Single);
+          selectable.Type(GridSelectionType.Row);
+      })
+      .Sortable(sortable =>
+      {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      })
+      .Filterable()
+      .Scrollable()
+      .Events(events =>
+      {
+          events.Remove("onRemove");
+          events.Save("onSave");
+      })
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.Id))
+          .Read(read => read.Action("Property_Read", "Dashboard"))
+                
+                                  .Destroy(destroy => destroy.Action("Property_Destroy", "Dashboard"))
+      )
+)
+<script src="~/Scripts/notify.min.js"></script>
+<script>
+
+    function onRemove(e){
+        //Implement the event handler for Remove
+        $.notify("Deleted", "success");
+    }
+
+    function onSave(e){
+        //Implement the event handler for Save
+        $.notify("Saved", "success");
+    }
+
+</script>
+

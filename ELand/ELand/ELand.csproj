@@ -172,6 +172,7 @@
     <Compile Include="Areas\Admin\Controllers\TypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
@@ -179,6 +180,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CustomAjaxHelper.cs" />
+    <Compile Include="Helper\PropertyPopulator.cs" />
     <Compile Include="Helper\Utility.cs" />
     <Compile Include="Migrations\201512301616340_InitialCreate.cs" />
     <Compile Include="Migrations\201512301616340_InitialCreate.Designer.cs">
@@ -212,24 +214,47 @@
     <Compile Include="Migrations\201601270635081_State.Designer.cs">
       <DependentUpon>201601270635081_State.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602080705384_Status.cs" />
+    <Compile Include="Migrations\201602080705384_Status.Designer.cs">
+      <DependentUpon>201602080705384_Status.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602290452164_City.cs" />
+    <Compile Include="Migrations\201602290452164_City.Designer.cs">
+      <DependentUpon>201602290452164_City.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602290456483_City1.cs" />
+    <Compile Include="Migrations\201602290456483_City1.Designer.cs">
+      <DependentUpon>201602290456483_City1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602290744326_Property1.cs" />
+    <Compile Include="Migrations\201602290744326_Property1.Designer.cs">
+      <DependentUpon>201602290744326_Property1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602290835036_Property2.cs" />
+    <Compile Include="Migrations\201602290835036_Property2.Designer.cs">
+      <DependentUpon>201602290835036_Property2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602291607377_Property3.cs" />
+    <Compile Include="Migrations\201602291607377_Property3.Designer.cs">
+      <DependentUpon>201602291607377_Property3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Agency.cs" />
     <Compile Include="Models\AgencyViewModel.cs" />
     <Compile Include="Models\AreaUnit.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Faq.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IndividualViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Property.cs" />
-    <Compile Include="Models\PropertySteps\Step1.cs" />
-    <Compile Include="Models\PropertySteps\Step3.cs" />
-    <Compile Include="Models\PropertySteps\Step2.cs" />
     <Compile Include="Models\Purpose.cs" />
     <Compile Include="Models\PType.cs" />
-    <Compile Include="Models\ViewModel\PropertyViewModel.cs" />
+    <Compile Include="Models\ViewModels\SearchProperty.cs" />
+    <Compile Include="Models\ViewModels\ViewProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -240,6 +265,9 @@
     <Content Include="Content\AdminTheme\js\sb-admin-2.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\component.css" />
+    <Content Include="Content\css\demo.css" />
+    <Content Include="Content\css\normalize.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome\fonts\fontawesome-webfonte0a5-2.html" />
@@ -593,6 +621,7 @@
     <Content Include="Content\Theme\style.css" />
     <Content Include="Images\MainPage\logo.png" />
     <Content Include="Images\MainPage\megamenu-image.jpg" />
+    <Content Include="Images\noimage.png" />
     <Content Include="Images\Profile\ProfileImage.jpg" />
     <Content Include="Images\Sliders\header-slider-1.jpg" />
     <Content Include="Images\Sliders\header-slider-3.jpg" />
@@ -655,6 +684,9 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js1\custom-file-input.js" />
+    <Content Include="Scripts\js1\jquery-v1.min.js" />
+    <Content Include="Scripts\js1\jquery.custom-file-input.js" />
     <Content Include="Scripts\js\charts\Chart.min.js" />
     <Content Include="Scripts\js\charts\init.js" />
     <Content Include="Scripts\js\contact-form.js" />
@@ -684,6 +716,7 @@
     <Content Include="Scripts\kendo\js\angular.min.js" />
     <Content Include="Scripts\kendo\js\jquery.min.js" />
     <Content Include="Scripts\kendo\js\jszip.min.js" />
+    <Content Include="Scripts\js1\.DS_Store" />
     <None Include="Scripts\kendo\js\kendo.all-vsdoc.js" />
     <None Include="Scripts\kendo\js\kendo.all.min.intellisense.js" />
     <Content Include="Scripts\kendo\js\kendo.all.min.js" />
@@ -986,10 +1019,15 @@
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Account\RegisterIndividual.cshtml" />
     <Content Include="Views\Account\RegisterAgency.cshtml" />
-    <Content Include="Views\Property\Add_Property.cshtml" />
-    <Content Include="Views\Property\Step2.cshtml" />
-    <Content Include="Views\Property\Step3.cshtml" />
-    <Content Include="Views\Property\Step4.cshtml" />
+    <Content Include="Views\Property\Create.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Dashboard\PropertyList.cshtml" />
+    <Content Include="Views\Dashboard\EditorTemplates\Property.cshtml" />
+    <Content Include="Views\Property\Edit.cshtml" />
+    <Content Include="Views\Property\Index.cshtml" />
+    <Content Include="Views\Property\List.cshtml" />
+    <Content Include="Views\Property\Feature.cshtml" />
+    <Content Include="Views\Property\Recent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1034,6 +1072,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601270635081_State.resx">
       <DependentUpon>201601270635081_State.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602080705384_Status.resx">
+      <DependentUpon>201602080705384_Status.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602290452164_City.resx">
+      <DependentUpon>201602290452164_City.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602290456483_City1.resx">
+      <DependentUpon>201602290456483_City1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602290744326_Property1.resx">
+      <DependentUpon>201602290744326_Property1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602290835036_Property2.resx">
+      <DependentUpon>201602290835036_Property2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602291607377_Property3.resx">
+      <DependentUpon>201602291607377_Property3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

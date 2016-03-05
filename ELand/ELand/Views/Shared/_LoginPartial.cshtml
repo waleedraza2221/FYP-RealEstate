@@ -6,11 +6,15 @@
     @Html.AntiForgeryToken()
 
     <div class="ct-panel--item ct-email">
-        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </div>
+    <div class="ct-panel--item ct-email">
+        <a href="@Url.Action("Index","Dashboard")">Dashboard </a>
+    </div>
         <div class="ct-panel--item ct-email">
             <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
         </div>
+  
     }
 }
 else

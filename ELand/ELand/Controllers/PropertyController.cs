@@ -1,171 +1,166 @@
 ﻿using ELand.Models;
-using ELand.Models.PropertySteps;
-using ELand.Models.ViewModel;
+using ELand.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace ELand.Controllers
-{
+{    
+    [Authorize]
     public class PropertyController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
         // GET: Property
-        public ActionResult Index()
+        public ActionResult Index(int Id)
         {
-            return View();
-        }
-        public ActionResult Add_Property()
-        {
-
-            if (Request.IsAjaxRequest())
-            {
-                var data = (Step1)Session["step1"];
-                return PartialView((Step1)Session["step1"]);
-
-            }
-            Session["step1"] = null;
-            Session["step2"] = null;
-            return View(new Step1());
+            var data=db.Property.FirstOrDefault(x=>x.Id==Id);
+            ViewBag.Contact = db.Users.FirstOrDefault(x => x.Id == data.UserId);
+            return View(data);
         }
 
-        //public ActionResult Step2() {
+        public ActionResult List(SearchProperty search) {
 
-        //    return View();
-        //}
-        public ActionResult Step2(Step1 model) {
+            ViewBag.CityId = CityID();
+            ViewBag.PropertyStatus = Purpose();
+            ViewBag.PropertyType = PTypee();
 
-            if (Session["step1"] == null)
-            {
-                Session["step1"] = new Step1()
-                {
-                    Address = model.Address,
-                    Description = model.Description,
-                    Latitude = model.Latitude,
-                    Longitude = model.Longitude,
-                    Title = model.Title
-                };
-            }
+            return View(db.Property.ToList());
+        }
 
-            ViewBag.PurposeID = Purpose();
-            ViewBag.TypeID = PTypee();
+        public ActionResult Feature() {
+
+            return PartialView(db.Property.OrderBy(x=>x.Area).Take(5).ToList());
+        }
+        public ActionResult Recent() {
+
+            return PartialView(db.Property.OrderByDescending(x => x.Id).Take(3).ToList());
+        }
+        public ActionResult Create()
+        {
             ViewBag.AreaID = AreaUnt();
-            if (Request.IsAjaxRequest()){
-                Step2 data = new Step2();
-                if (Session["step2"] != null)
-                {
-                    data = (Step2)Session["step2"];
-                    ViewBag.PurposeID = Purpose(data.PurposeID);
-                    ViewBag.TypeID = PTypee(data.TypeID);
-                    ViewBag.AreaID = AreaUnt(data.AreaID);
-                }
-                return PartialView(data);
-            }
-
-            return View(new Step2());
-        
-        }
-        public ActionResult Step3(Step2 model)
-        {
-
-            var data = (Step1)Session["step1"];
-
-            Session["step2"] = new Step2() {
-                ADSL_Cable = model.ADSL_Cable,
-                Air_Conditioning = model.Air_Conditioning,
-                Area = model.Area,
-                AreaID = model.AreaID,
-                Bath = model.Bath,
-                Bed = model.Bed,
-                Digital_Antenna = model.Digital_Antenna,
-                Exotic_Garden = model.Exotic_Garden,
-                Fridge = model.Fridge,
-                Full_HD_TV = model.Full_HD_TV,
-                Garage = model.Garage,
-                Grill = model.Grill,
-                Guest_House = model.Guest_House,
-                HiFi_Audio = model.HiFi_Audio,
-                Kitchen = model.Kitchen,
-                Kitchen_With_Island = model.Kitchen_With_Island,
-                Pool = model.Pool,
-                Price = model.Price,
-                PurposeID = model.PurposeID,
-                TypeID = model.TypeID,
-                WiFi = model.WiFi
-            };
-
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView();
-            }
-            
+            ViewBag.TypeID = PTypee();
+            ViewBag.PurposeID = Purpose();
+            ViewBag.CityId = CityID();
             return View();
         }
+        [HttpPost]
+        public ActionResult Create(Property model, HttpPostedFileBase titleimg, HttpPostedFileBase[] gimages)
+        {
 
-        public ActionResult Step4(Step3 model) {
-            Step1 stp1 = (Step1)Session["step1"];
-            Step2 stp2 = (Step2)Session["step2"];
-            PropertyViewModel propertyVM = new PropertyViewModel() {
-                Address = stp1.Address,
-                Title = stp1.Title,
-                Description = stp1.Description,
-                Latitude = stp1.Latitude,
-                Longitude = stp1.Longitude,
-                ADSL_Cable = stp2.ADSL_Cable,
-                Air_Conditioning = stp2.Air_Conditioning,
-                Area = stp2.Area,
-                AreaID = stp2.AreaID,
-                Bath = stp2.Bath,
-                Bed = stp2.Bed,
-                Digital_Antenna = stp2.Digital_Antenna,
-                Exotic_Garden = stp2.Exotic_Garden,
-                Fridge = stp2.Fridge,
-                Full_HD_TV = stp2.Full_HD_TV,
-                Garage = stp2.Garage,
-                Grill = stp2.Grill,
-                Guest_House = stp2.Guest_House,
-                HiFi_Audio = stp2.HiFi_Audio,
-                Kitchen = stp2.Kitchen,
-                Kitchen_With_Island = stp2.Kitchen_With_Island,
-                Pool = stp2.Pool,
-                Price = stp2.Price,
-                PurposeID = stp2.PurposeID,
-                TypeID = stp2.TypeID,
-                WiFi = stp2.WiFi
-            };
-            string Mainimg = "";
-            if (model.MainImage != null)
-            {
-                Guid g;
-                g = Guid.NewGuid();
-                Mainimg = System.IO.Path.GetFileName(model.MainImage.FileName);
-                Mainimg = g + Mainimg;
-                model.MainImage.SaveAs(Server.MapPath("~/Images/Property/" + Mainimg));
-            }
-            else
-            {
-                Mainimg = "PropertyMainImage.jpg";
-            }
-            if (model.GalleryImages != null)
-            {
-                List<string> imgs = new List<string>();
-                foreach (var item in model.GalleryImages)
-                {
-                    string s = "";
-                    Guid g;
-                    g = Guid.NewGuid();
-                    s = System.IO.Path.GetFileName(item.FileName);
-                    s = g +s;
-                    item.SaveAs(Server.MapPath("~/Images/Property/" + s));
-                    imgs.Add(s);
+
+            if (ModelState.IsValid) {
+                Guid g = Guid.NewGuid();
+
+                string title = "";
+                string gimg = "";
+                if (titleimg != null) {
+                    Directory.CreateDirectory(Server.MapPath("~/Images/Property/" + g));
+                    if (Directory.Exists(Server.MapPath("~/Images/Property/" + g))) {
+                        title = g+titleimg.FileName;
+                        titleimg.SaveAs(Server.MapPath("~/Images/Property/" + g+"/"+title));
+                 }
                 }
-                propertyVM.GalleryImages = imgs;
-            }
-            propertyVM.MainImage = Mainimg;
+                if (gimages != null) {
+                    if (Directory.Exists(Server.MapPath("~/Images/Property/" + g))==false)
+                    {
+                        Directory.CreateDirectory(Server.MapPath("~/Images/Property/" + g));
+                    }
+                    if (Directory.Exists(Server.MapPath("~/Images/Property/" + g))) {
 
-            return View(propertyVM);
+                        foreach (var img in gimages)
+                        {
+                            gimg+=img.FileName;
+                            img.SaveAs(Server.MapPath("~/Images/Property/"+g+"/"+img.FileName));
+                            gimg += ",";
+                        }
+                    }
+                }
+
+                gimg = gimg.Remove(gimg.Length - 1, 1);
+                model.GlobalId = g.ToString();
+                model.MainImage = title;
+                model.GalleryImages = gimg;
+                model.UserId = db.Users.FirstOrDefault(x=>x.Email==User.Identity.Name).Id;
+                model.PublishDate = DateTime.Now;
+                model.UpdateDate = DateTime.Now;
+                db.Property.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Dashboard");
+            }
+
+
+
+            return View(model);
+        }
+        public ActionResult Edit(int id)
+        {
+            var data = db.Property.FirstOrDefault(x => x.Id == id);
+            ViewBag.AreaID = AreaUnt(data.AreaID);
+            ViewBag.TypeID = PTypee(data.TypeID);
+            ViewBag.PurposeID = Purpose(data.PurposeID);
+            ViewBag.CityId = CityID(data.CityId);
+
+            return View(data);
+        }
+        [HttpPost]
+        public ActionResult Edit(Property model, HttpPostedFileBase titleimg, HttpPostedFileBase[] gimages)
+        {
+            if (ModelState.IsValid)
+            {
+                string g = model.GlobalId;
+
+                string title = "";
+                string gimg = "";
+                if (titleimg != null)
+                {
+                    if (model.MainImage != "noimage.png")
+                    {
+                        System.IO.File.Delete(Server.MapPath("~/Images/Property/" + g+"/"+model.MainImage));
+                    }
+                    if (Directory.Exists(Server.MapPath("~/Images/Property/" + g)))
+                    {
+                        title = g + titleimg.FileName;
+                        titleimg.SaveAs(Server.MapPath("~/Images/Property/" + g + "/" + title));
+                        model.MainImage = title;
+                    }
+                }
+                if (gimages != null)
+                {
+                    
+                    if (Directory.Exists(Server.MapPath("~/Images/Property/" + g)))
+                    {
+                        string[] s = model.GalleryImages.Split(',');
+                        foreach (var i in s)
+                        {
+                            System.IO.File.Delete(Server.MapPath("~/Images/Property/" + g + "/" + i));
+                        }
+
+                        foreach (var img in gimages)
+                        {
+                            gimg += img.FileName;
+                            img.SaveAs(Server.MapPath("~/Images/Property/" + g + "/" + img.FileName));
+                            gimg += ",";
+                        }
+                    }
+                    gimg = gimg.Remove(gimg.Length - 1, 1);
+                    model.GalleryImages = gimg;
+                }
+                model.UpdateDate = DateTime.Now;
+
+          db.Entry(model).State = EntityState.Modified;
+            db.SaveChanges();
+               
+                return RedirectToAction("Index", "Dashboard");
+            }
+
+
+
+            return View(model);
+          
         }
 
         public IEnumerable<SelectListItem> Purpose(int id=0) {
@@ -226,5 +221,57 @@ namespace ELand.Controllers
             return it;
         }
 
+        public IEnumerable<SelectListItem> CityID(int id = 0)
+        {
+
+            List<SelectListItem> it = new List<SelectListItem>();
+            var lst = db.Cities.OrderBy(x=>x.Name).ToList();
+            foreach (var item in lst)
+            {
+                SelectListItem i = new SelectListItem()
+                {
+                    Text = item.Name,
+                    Value = Convert.ToString(item.Id),
+                    Selected = item.Id == id ? true : false
+                };
+                it.Add(i);
+
+            }
+
+            return it;
+        }
+
+    
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     }
-}
+
+    
+
+
+
+
+    }

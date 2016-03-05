@@ -1,0 +1,25 @@
+﻿@Styles.Render("~/Content/Kendo")
+
+
+
+@{
+    ViewBag.Title = "DashBoard";
+}
+<br />
+<div class="container">
+    <div class="row">
+        @{
+            Html.RenderAction("PropertyList", "Dashboard");
+        }
+    </div>
+</div>
+<br />
+
+
+
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/Kendo")
+}
+
