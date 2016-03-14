@@ -42,26 +42,12 @@ namespace ELand.Areas.Admin.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Agency_Destroy([DataSourceRequest]DataSourceRequest request, Agency agency)
         {
-            if (ModelState.IsValid)
-            {
-                var entity = new Agency
-                {
-                    Id = agency.Id,
-                    Title = agency.Title,
-                    Description = agency.Description,
-                    Skype = agency.Skype,
-                    Facebook = agency.Facebook,
-                    Twitter = agency.Twitter,
-                    Instagram = agency.Instagram,
-                    Email = agency.Email,
-                    Mobile = agency.Mobile,
-                    Image = agency.Image
-                };
+                var entity = db.Agency.FirstOrDefault(x=>x.Id==agency.Id);
 
                 db.Agency.Attach(entity);
                 db.Agency.Remove(entity);
                 db.SaveChanges();
-            }
+          
 
             return Json(new[] { agency }.ToDataSourceResult(request, ModelState));
         }

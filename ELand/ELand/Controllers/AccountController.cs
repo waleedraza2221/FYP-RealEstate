@@ -253,6 +253,7 @@ namespace ELand.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+         
             return View();
         }
 
@@ -261,13 +262,13 @@ namespace ELand.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+               var result = UserManager.Find(model.Email,model.Password);
+                if (result!=null)
                 {
                   //  await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     using(var db=new ApplicationDbContext()){
@@ -296,7 +297,8 @@ namespace ELand.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-                AddErrors(result);
+                return RedirectToAction("Index", "Home");
+               // AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
