@@ -1,0 +1,92 @@
+﻿
+@model ELand.Models.IndividualViewModel
+
+@{
+    ViewBag.Title = "Register Individual";
+}
+
+
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 pull-right">
+            <form action="@Url.Action("Create", "Agent")" enctype="multipart/form-data" method="post" role="form" class="ct-formRegister pull-right">
+                <div class="form-group">
+                    <div class="ct-form--label--type2">
+                        <div class="ct-u-displayTableVertical">
+                            <div class="ct-u-displayTableCell">
+                                <div class="ct-input-group-btn">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-user"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="ct-u-displayTableCell text-center">
+                                <span class="text-uppercase">Become a member</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <label>First Name</label>
+                        @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control input-lg", required = "required" })
+
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Last Name</label>
+                        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control input-lg", required = "required" })
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Email</label>
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control input-lg", required = "required" })
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Password</label>
+                        @Html.PasswordFor(x => x.Password, new { @class = "form-control input-lg", required = "required" })
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Confirm Password</label>
+                        @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control input-lg", required = "required" })
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Phone</label>
+                        @Html.TextBoxFor(x => x.Phone, new { @class = "form-control input-lg", required = "required" })
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Skype</label>
+                        @Html.TextBoxFor(x => x.Skype, new { @class = "form-control input-lg" })
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Facebook</label>
+                        @Html.TextBoxFor(x => x.Facebook, new { @class = "form-control input-lg" })
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Twitter</label>
+                        @Html.TextBoxFor(x => x.Twitter, new { @class = "form-control input-lg" })
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Instagram</label>
+                        @Html.TextBoxFor(x => x.Instagram, new { @class = "form-control input-lg" })
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Profile Image</label>
+                        <input type="file" accept="image/*" class="form-control" name="pimage" />
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="" required>
+                                I read and agree to<a href="#"> terms &amp; conditions</a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="ct-form--item">
+                        <button type="submit" class="btn btn-warning center-block">Register Now</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

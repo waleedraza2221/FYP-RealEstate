@@ -9,6 +9,9 @@
         columns.Bound(c => c.Phone);
         columns.Bound(c => c.Message);
         columns.Bound(c => c.IsRead);
+        columns.Bound(p => p.Id).ClientTemplate("<a  class='btn btn-primary btn-xs' href='"+
+            Url.Action("IsSeen", "Contact", new { area="Admin"}) +
+        "/#= Id #'>Reply</a>").Title("");
         columns.Command(command => {command.Destroy(); }).Width(180);
       })
       .ColumnMenu()

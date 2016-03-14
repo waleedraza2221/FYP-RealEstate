@@ -25,6 +25,7 @@ namespace ELand
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Theme/bootstrap.css",
+                      "~/Content/PagedList.css",
                       "~/Content/Theme/style.css"));
             bundles.Add(new ScriptBundle("~/Scripts/Myfiles").Include(
                 "~/Scripts/js/dependencies.js",

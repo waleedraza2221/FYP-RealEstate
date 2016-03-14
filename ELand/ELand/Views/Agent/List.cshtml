@@ -1,0 +1,69 @@
+﻿
+@using PagedList.Mvc;
+@using PagedList;
+@model  IPagedList<ELand.Models.ApplicationUser>
+
+@{
+
+    ViewBag.Title = "Agents";
+
+
+
+}
+
+
+
+
+<section class="ct-u-paddingTop60 ct-u-paddingBottom30 text-center">
+    <div class="container">
+        <div class="ct-heading ct-u-marginBottom60">
+            <h3 class="text-uppercase">Agents</h3>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-6 col-md-3">
+                    <div class="ct-personBox text-left">
+                        <div class="ct-imagePerson">
+                            <img height="266" src="~/Images/Profile/@item.ProfileImage" alt="">
+                            <ul class="ct-panel--socials list-inline list-unstyled">
+                                <li><a href="https://www.facebook.com/@item.Twitter"><div class="ct-socials ct-socials--circle"><i class="fa fa-facebook"></i></div></a></li>
+                                <li><a href="https://twitter.com/@item.Twitter"><div class="ct-socials ct-socials--circle"><i class="fa fa-twitter"></i></div></a></li>
+                                <li><a href="@item.Instagram"><div class="ct-socials ct-socials--circle"><i class="fa fa-instagram"></i></div></a></li>
+                            </ul>
+                        </div>
+                        <div class="ct-personContent">
+                            <div class="ct-personName ct-u-paddingBottom10 ct-u-marginBottom20">
+                                <h5 class="ct-fw-600">@item.FirstName @item.LastName</h5>
+                                <a href="@Url.Action("Index", "Agent", new { id=item.Id})">@item.Properties.Count()</a>
+                            </div>
+                            <div class="ct-personDescription">
+                                <ul class="list-unstyled ct-contactPerson">
+                                    <li>
+                                        <i class="fa fa-phone"></i>
+                                        <span>@item.Phone</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-mobile"></i>
+                                        <span>@item.Phone</span>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-skype"></i> @item.Skype</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-envelope-o"></i> @item.Email</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <div class="ct-pagination text-center">
+            @Html.PagedListPager(Model, page => Url.Action("List", new { page }))
+        </div>
+    </div>
+</section>

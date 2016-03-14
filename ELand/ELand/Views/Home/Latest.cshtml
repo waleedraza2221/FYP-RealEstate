@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ELand.Models.Property>
+
+
+@foreach (var item in Model)
+{
+
+    <div class="ct-itemProducts--small ct-itemProducts--small-type2">
+        <a href="@Url.Action("Index", "Property", new { id = item.Id })">
+            <div class=" ct-main-content">
+            <div class="ct-imageBox">
+                <img src="~/Images/Property/@item.GlobalId/@item.MainImage" alt="">
+            </div>
+            <div class="ct-main-text">
+                <div class="ct-product--tilte">
+                    @item.City.Name
+                </div>
+                <div class="ct-product--price">
+                    <span>@item.Price/@item.Purpose.Title</span>
+                </div>
+            </div>
+</div>
+        </a>
+    </div>
+
+
+}
+

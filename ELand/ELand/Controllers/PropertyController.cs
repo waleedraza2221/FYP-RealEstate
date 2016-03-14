@@ -7,10 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList.Mvc;
+using PagedList;
 
 namespace ELand.Controllers
 {    
-    [Authorize]
+   
     public class PropertyController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
@@ -22,14 +24,57 @@ namespace ELand.Controllers
             return View(data);
         }
 
-        public ActionResult List(SearchProperty search) {
+        public ActionResult List(SearchProperty search,int? page)
+        {
+            int bath=Convert.ToInt32(search.BathRoom);
+            int bed = Convert.ToInt32(search.BedRoom);
+            Int64 sprice = 0;
+            Int64 eprice = 0;
+            if (search.Price != null) {
+                string[] p = search.Price.Split(',');
+                sprice = Convert.ToInt64(p[0]);
+                eprice = Convert.ToInt64(p[1]);
+            }
+            //string[] price = search.Price.Split('-');
+            var data = (from p in db.Property where
+                            (search.Id ==0 ? true:p.Id==search.Id)
+                            && 
+                            (search.CityId==0 ? true:p.CityId==search.CityId)
+                            &&
+                            (search.PropertyStatus==0? true:p.PurposeID==search.PropertyStatus)
+                            &&
+                            (search.PropertyType==0? true:p.TypeID==search.PropertyType)
+                            &&
+                            (bath==0? true:bath<=2 ? p.Bath==bath:p.Bath>2)
+                             &&
+                            (bed == 0 ? true : bed <= 2 ? p.Bed == bed : p.Bed > 2)
+                           &&
+                           (sprice==0? true:p.Price>=sprice&&p.Price<=eprice)
+                        orderby  p.Id select p);
+            //(from t in TheDC.SomeTable
 
-            ViewBag.CityId = CityID();
-            ViewBag.PropertyStatus = Purpose();
-            ViewBag.PropertyType = PTypee();
+            // where TheIDs.Contains(t.ID) && (
+            // t.column1.Contains(TheSearchTerm) ||
+            // t.column2.Contains(TheSearchTerm) ||
+            // t.column3.Contains(TheSearchTerm))
+            // select t.ID).ToList();
+            var d = data.ToList();
 
+
+            ViewBag.CityId = CityID(search.CityId);
+            ViewBag.PropertyStatus = Purpose(search.PropertyStatus);
+            ViewBag.PropertyType = PTypee(search.PropertyType);
+            ViewBag.Total = d.Count();
+           
+            return View(data.ToPagedList(page ?? 1,12));
+        }
+
+
+        public ActionResult Map()
+        {
             return View(db.Property.ToList());
         }
+
 
         public ActionResult Feature() {
 
@@ -39,6 +84,8 @@ namespace ELand.Controllers
 
             return PartialView(db.Property.OrderByDescending(x => x.Id).Take(3).ToList());
         }
+
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.AreaID = AreaUnt();
@@ -48,6 +95,7 @@ namespace ELand.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Property model, HttpPostedFileBase titleimg, HttpPostedFileBase[] gimages)
         {
 
@@ -96,9 +144,18 @@ namespace ELand.Controllers
 
             return View(model);
         }
+        [Authorize]
         public ActionResult Edit(int id)
         {
-            var data = db.Property.FirstOrDefault(x => x.Id == id);
+           var data = db.Property.FirstOrDefault(x => x.Id == id);
+            var user = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+            if (data.UserId != user.Id)
+            {
+                return RedirectToAction("Error403", "Home");
+            }
+
+
+
             ViewBag.AreaID = AreaUnt(data.AreaID);
             ViewBag.TypeID = PTypee(data.TypeID);
             ViewBag.PurposeID = Purpose(data.PurposeID);
@@ -107,6 +164,7 @@ namespace ELand.Controllers
             return View(data);
         }
         [HttpPost]
+        [Authorize]
         public ActionResult Edit(Property model, HttpPostedFileBase titleimg, HttpPostedFileBase[] gimages)
         {
             if (ModelState.IsValid)
@@ -128,7 +186,8 @@ namespace ELand.Controllers
                         model.MainImage = title;
                     }
                 }
-                if (gimages != null)
+               int a= gimages.Count();
+                if (gimages[0] != null)
                 {
                     
                     if (Directory.Exists(Server.MapPath("~/Images/Property/" + g)))
@@ -241,6 +300,8 @@ namespace ELand.Controllers
             return it;
         }
 
+
+      
     
    
     

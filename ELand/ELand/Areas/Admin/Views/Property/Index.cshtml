@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "PropertyList";
 }
 
@@ -12,12 +11,12 @@
           columns.Bound(c => c.City);
           columns.Bound(p => p.Id).ClientTemplate(
     "<a class='btn btn-primary btn-xs' href='" +
-        Url.Action("Edit", "Property") +
+        Url.Action("Edit", "Property", new { area=""}) +
         "/#= Id #'" +
-    "><i class='glyphicon glyphicon-pencil'></i></a> <a class='btn btn-primary btn-xs' href='Property/Index/#= Id #'" +
+    "><i class='glyphicon glyphicon-pencil'></i></a> <a class='btn btn-primary btn-xs' href='" + Url.Action("Index", "Property/Index", new { area = "" }) + "/#= Id #'" +
     "><i class='fa fa-search'></i></a>"
 ).Width(100).Title("").Filterable(false).Sortable(false);
-          columns.Command(command => {command.Destroy(); }).Width(180);
+          columns.Command(command => { command.Destroy(); }).Width(180);
       })
       .ToolBar(toolbar =>
       {
@@ -30,7 +29,7 @@
           toolbar.Pdf();
       })
       .ColumnMenu()
-      
+
       .Pageable()
       .Navigatable()
       .Selectable(selectable =>
@@ -52,9 +51,9 @@
       .DataSource(dataSource => dataSource
           .Ajax()
           .Model(model => model.Id(p => p.Id))
-          .Read(read => read.Action("Property_Read", "Dashboard"))
-          .PageSize(20)    
-                                  .Destroy(destroy => destroy.Action("Property_Destroy", "Dashboard"))
+          .Read(read => read.Action("Property_Read", "Property"))
+          .PageSize(20)
+                                                  .Destroy(destroy => destroy.Action("Property_Destroy", "Property"))
       ).HtmlAttributes(new { style = "height: 500px" })
 )
 <script src="~/Scripts/notify.min.js"></script>
@@ -71,4 +70,3 @@
     }
 
 </script>
-

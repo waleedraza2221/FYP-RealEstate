@@ -1,28 +1,31 @@
 ﻿
 @{
-    ViewBag.Title = "PropertyList";
+    ViewBag.Title = "AgentList";
 }
 
-@(Html.Kendo().Grid<ELand.Models.ViewModels.ViewProperty>()
-      .Name("gridprop")
+
+
+@(Html.Kendo().Grid<ELand.Models.ApplicationUser>()
+      .Name("grid")
       .Columns(columns =>
       {
-          columns.Bound(c => c.MainImage).Title("Img").ClientTemplate(@"<img width='50' height='50' src='../Images/Property/#: GlobalId #/#:MainImage #' />").Width(80).Sortable(false).Filterable(false);
-          columns.Bound(c => c.Title);
-          columns.Bound(c => c.City);
+          columns.Bound(c => c.ProfileImage).Title("Img").ClientTemplate(@"<img width='50' height='50' src='../Images/Profile/#:ProfileImage #' />").Width(80).Sortable(false).Filterable(false);
+          columns.Bound(c => c.FirstName);
+          columns.Bound(c => c.LastName);
+          columns.Bound(c => c.UserName);
           columns.Bound(p => p.Id).ClientTemplate(
     "<a class='btn btn-primary btn-xs' href='" +
-        Url.Action("Edit", "Property") +
+        Url.Action("Edit", "Agent") +
         "/#= Id #'" +
-    "><i class='glyphicon glyphicon-pencil'></i></a> <a class='btn btn-primary btn-xs' href='Property/Index/#= Id #'" +
+    "><i class='glyphicon glyphicon-pencil'></i></a> <a class='btn btn-primary btn-xs' href='Agent/Index/#= Id #'" +
     "><i class='fa fa-search'></i></a>"
 ).Width(100).Title("").Filterable(false).Sortable(false);
-          columns.Command(command => {command.Destroy(); }).Width(180);
+          columns.Command(command => { command.Destroy(); }).Width(180);
       })
       .ToolBar(toolbar =>
       {
           toolbar.Template(@<text>
-            <a href="@Url.Action("Create","Property")" class="btn btn-primary">Add Property</a>
+            <a href="@Url.Action("Create","Agent")" class="btn btn-primary">Add Agent</a>
         </text>);
 
 
@@ -30,7 +33,7 @@
           toolbar.Pdf();
       })
       .ColumnMenu()
-      
+
       .Pageable()
       .Navigatable()
       .Selectable(selectable =>
@@ -52,9 +55,9 @@
       .DataSource(dataSource => dataSource
           .Ajax()
           .Model(model => model.Id(p => p.Id))
-          .Read(read => read.Action("Property_Read", "Dashboard"))
-          .PageSize(20)    
-                                  .Destroy(destroy => destroy.Action("Property_Destroy", "Dashboard"))
+          .Read(read => read.Action("Agent_Read", "Dashboard"))
+          .PageSize(20)
+                                  .Destroy(destroy => destroy.Action("Agent_Destroy", "Dashboard"))
       ).HtmlAttributes(new { style = "height: 500px" })
 )
 <script src="~/Scripts/notify.min.js"></script>
@@ -71,4 +74,3 @@
     }
 
 </script>
-

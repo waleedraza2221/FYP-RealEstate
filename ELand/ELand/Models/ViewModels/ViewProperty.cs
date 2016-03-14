@@ -13,7 +13,7 @@ namespace ELand.Models.ViewModels
 
         public string Description { get; set; }
       
-        public string Price { get; set; }
+        public Int64 Price { get; set; }
 
         public string GlobalId { get; set; }
  

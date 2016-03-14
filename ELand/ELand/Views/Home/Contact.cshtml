@@ -1,17 +1,142 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<div class="ct-site--map">
+    <div class="container">
+        <a href="@Url.Action("Index","Home")">Home</a>
+        <a href="@Url.Action("Contact","Home")">Contact Us</a>
+    </div>
+</div>
+<br />
+<section class="ct-u-paddingBoth60 ct-blog--small">
+    <div class="container">
+        <div class="col-md-6 col-md-offset-2">
+            <form role="form" action="@Url.Action("Contact","Home")" method="post" class="contactForm validateIt ct-contactForm--small ct-form--darkStyle" data-ajax="#res">
+                <div class="form-group">
+                    <div class="ct-form--label--type2">
+                        <div class="ct-u-displayTableVertical">
+                            <div class="ct-u-displayTableCell">
+                                <div class="ct-input-group-btn">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-envelope-o"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="ct-u-displayTableCell text-center">
+                                <span class="text-uppercase">Send us a message</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label id="res"></label>
+                        <label>Your Name</label>
+                        <input id="contact_name" name="Name" type="text" required class="form-control input-lg" placeholder="">
+                    </div>
+                    <div class="ct-u-displayTableVertical">
+                        <div class="ct-u-displayTableCell">
+                            <div class="ct-form--item ct-u-marginBottom20">
+                                <label>Phone</label>
+                                <input id="contact_phone" name="Phone" type="tel" required class="form-control input-lg" placeholder="">
+                            </div>
+                        </div>
+                        <div class="ct-u-displayTableCell">
+                            <div class="ct-form--item ct-u-marginBottom20">
+                                <label>Email</label>
+                                <input id="contact_email" name="Email" type="email" required class="form-control input-lg" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Choose Topic</label>
+                        <select class="ct-js-select ct-select-lg">
+                            <option value="general">General Inquiries</option>
+                            <option value="misc">Misc</option>
+                        </select>
+                    </div>
+                    <div class="ct-form--item ct-u-marginBottom20">
+                        <label>Message</label>
+                        <textarea id="contact_message" placeholder="How can we help you?" class="form-control input-lg" rows="4" name="Message" required=""></textarea>
+                    </div>
+                    <div class="ct-form--item">
+                        <button type="submit" class="btn btn-warning center-block">Send Message</button>
+                    </div>
+                </div>
+            </form>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+        </div>
+    </div>
+
+</section>
+<section class="ct-u-paddingBoth60">
+    <div class="container">
+        <div class="col-md-6 col-lg-3">
+            <div class="ct-heading ct-u-marginBottom50">
+                <h4 class="text-uppercase">address details</h4>
+            </div>
+            <p>
+                Estato Inc.<br>
+                2350 Bayshore Parkway<br>
+                Mountain View, CA 94043<br>
+                United States
+            </p>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="ct-heading ct-u-marginBottom50">
+                <h4 class="text-uppercase">direct contact</h4>
+            </div>
+            <ul class="list-unstyled ct-phoneNumbers ct-u-marginBottom30">
+                <li>
+                    <i class="fa fa-phone"></i>
+                    <span class="ct-fw-600">0 800 123 4567</span>
+                </li>
+                <li>
+                    <i class="fa fa-fax"></i>
+                    <span class="ct-fw-600">0 800 123 4562</span>
+                </li>
+                <li>
+                    <i class="fa fa-mobile"></i>
+                    <span class="ct-fw-600">+1 500 700 800</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="ct-heading ct-u-marginBottom50">
+                <h4 class="text-uppercase">emails</h4>
+            </div>
+            <div class="ct-contactList ">
+                <a class="ct-u-marginBottom10" href="#"><i class="fa fa-envelope-o"></i>questions@estato.com</a>
+                <a class="ct-u-marginBottom10" href="#"><i class="fa fa-envelope-o"></i>sales@estato.com</a>
+                <a class="ct-u-marginBottom10" href="#"><i class="fa fa-envelope-o"></i>loans@estato.com</a>
+                <a href="#"><i class="fa fa-envelope-o"></i>agents@estato.com</a>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="ct-heading ct-u-marginBottom50">
+                <h4 class="text-uppercase">social networks</h4>
+            </div>
+            <ul class="ct-panel--socials ct-panel--navbar list-unstyled ct-u-marginBottom30">
+                <li class="ct-u-marginBottom10"><a href="https://www.facebook.com/"><div class="ct-socials ct-socials--circle"><i class="fa fa-facebook"></i></div>Facebook Profile</a></li>
+                <li class="ct-u-marginBottom10"><a href="https://twitter.com/"><div class="ct-socials ct-socials--circle"><i class="fa fa-twitter"></i></div>Twitter Profile</a></li>
+                <li><a href="#"><div class="ct-socials ct-socials--circle"><i class="fa fa-instagram"></i></div>Instagram Profile</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="ct-mediaSection ct-u-paddingTop60 ct-u-paddingBottom90 ct-u-text--white" data-stellar-background-ratio="0.2" data-height="350" data-type="parallax" data-bg-image="/Images/iconBox-parallax.jpg" data-bg-image-mobile="/Images/iconBox-parallax.jpg">
+    <div class="ct-mediaSection-inner">
+        <div class="container">
+            <div class="ct-heading ct-u-marginBottom60 text-center">
+                <h3 class="text-uppercase">latest tweets</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="twitterContainer text-center">
+                        <i class="fa fa-twitter ct-u-marginBottom50"></i>
+                        <div class="ct-js-twitter ct-twitter ct-twitter--dark"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /container -->
+    </div>
+</section>

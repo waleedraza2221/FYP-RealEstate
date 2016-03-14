@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ELand.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ELand.Controllers
 {
@@ -71,7 +72,7 @@ namespace ELand.Controllers
                     img="ProfileImage.jpg";
                 }
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,Phone=model.Phone,Skype=model.Skype,Twitter=model.Twitter,Instagram=model.Instagram,FirstName=model.FirstName,LastName=model.LastName,PhoneNumber=model.Phone,ProfileImage=img };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Phone = model.Phone, Skype = model.Skype, Twitter = model.Twitter, Instagram = model.Instagram, FirstName = model.FirstName, LastName = model.LastName, PhoneNumber = model.Phone, ProfileImage = img, IsAgencyAdmin = false };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -268,9 +269,26 @@ namespace ELand.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                  //  await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    using(var db=new ApplicationDbContext()){
+                    var roleStore = new RoleStore<IdentityRole>(db);
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+                   var rol= roleManager.FindByName("Admin");
+                   if (rol == null)
+                   {
+                       IdentityRole r = new IdentityRole("Admin");
+                       roleManager.Create(r);
+                       db.SaveChanges();
+                       var u = db.Users.FirstOrDefault(x => x.UserName == model.Email);
+                       UserManager.AddToRole(u.Id,"Admin");
+                   }
+                   else {
+
+                       var u = db.Users.FirstOrDefault(x => x.UserName == model.Email);
+                       UserManager.AddToRole(u.Id, "Admin");
+                   }
+
+                    }// For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);

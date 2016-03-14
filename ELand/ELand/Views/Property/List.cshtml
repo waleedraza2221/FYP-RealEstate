@@ -1,5 +1,7 @@
-﻿@model IEnumerable<ELand.Models.Property>
-
+﻿
+@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<ELand.Models.Property>
 @{
     ViewBag.Title = "List";
 }
@@ -62,7 +64,7 @@
                                                         <div class="ct-form--item">
                                                             <label>Bedrooms</label>
                                                             <select name="BedRoom" class="ct-js-select ct-select-lg">
-                                                                <option value="any">Any</option>
+                                                                <option value="0">Any</option>
                                                                 <option value="1">1</option>
                                                                 <option value="2">2</option>
                                                                 <option value="3">3+</option>
@@ -73,7 +75,7 @@
                                                         <div class="ct-form--item">
                                                             <label>Bathrooms</label>
                                                             <select name="BathRoom" class="ct-js-select ct-select-lg">
-                                                                <option value="any">Any</option>
+                                                                <option value="0">Any</option>
                                                                 <option value="1">1</option>
                                                                 <option value="2">2</option>
                                                                 <option value="3">3+</option>
@@ -82,13 +84,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="ct-form--item ct-u-marginBoth40">
-                                                    <input name="Price" type="text" class="slider ct-js-sliderTicks" value="" data-slider-handle="square" data-slider-min="5000" data-slider-max="5000000" data-slider-step="100000" data-slider-value="[1000000,2000000]" />
+                                                    <input name="Price" type="text" class="slider ct-js-sliderTicks" value="" data-slider-handle="square" data-slider-min="1000" data-slider-max="500000000" data-slider-step="1000" data-slider-value="[1000,20000]" />
                                                     <label class="text-center center-block">Price ($)</label>
                                                 </div>
-                                                <div class="ct-u-displayTableCell">
+                                                @*<div class="ct-u-displayTableCell">
                                                     <input name="Area" type="text" class="slider ct-js-sliderTicks" value="" data-slider-handle="square" data-slider-min="0" data-slider-max="200" data-slider-step="20" data-slider-value="[60,120]" />
                                                     <label class="text-center center-block">Area (m2)</label>
-                                                </div>
+                                                </div>*@
                                                 <button type="submit" class="btn btn-warning ct-u-marginTop10">Search or Filter Now</button>
                                             </div>
                                         </form>
@@ -100,16 +102,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 col-lg-9">
+               @if (Model.Count() > 0) { 
+                 <div class="col-md-8 col-lg-9">
                     <div class="ct-sortingBar ct-u-paddingRight10 ct-u-paddingLeft10 ct-u-marginBottom30">
                         <div class="ct-sortingTitle pull-left">
-                            <h4 class="text-uppercase">Search Results<span> (231)</span></h4>
+                            <h4 class="text-uppercase">Search Results<span> (@ViewBag.Total)</span></h4>
                         </div>
-                        <ul class="list-inline list-unstyled pull-right ct-u-paddingBoth15">
+                       @*<ul class="list-inline list-unstyled pull-right ct-u-paddingBoth15">
                             <li>
                                 <form>
-                                    <select class="ct-js-select">
-                                        <option value="price">Sort by</option>
+                                    <select data-ajax=""  class="ct-js-select">
+                                        <option value="id">Sort by</option>
                                         <option value="price">Price</option>
                                         <option value="newness">Newness</option>
                                         <option value="rating">Rating</option>
@@ -129,7 +132,8 @@
                                     </select>
                                 </form>
                             </li>
-                        </ul>
+                        </ul>*@
+                        
                         <ul class="ct-showPages list-inline list-unstyled pull-right ct-u-paddingBoth15">
                             <li class="ct-showElements is-active" id="ct-js-showTiles">
                                 <a href="#">
@@ -145,441 +149,60 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="row ct-js-search-results ct-showProducts--default">
-                        <div class="col-sm-6 col-md-6 col-lg-4">
+
+                        @foreach (var item in Model) { 
+                        <div class="col-sm-6 col-md-6 col-lg-4" >
                             <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
+                                @if (item.Purpose.Title == "Sale") { 
                                 <label class="control-label sale">
                                     Sale
-                                </label>
-                                <a href="product-single.html">
+                                </label>}
+                                else
+                                {
+
+                                    <label class="control-label new">
+                                        @item.Purpose.Title
+                                    </label>
+                                }
+                                <a href="@Url.Action("Index", "Property", new { id=@item.Id})">
                                     <div class="ct-main-content">
                                         <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-10.jpg" alt=""><i class="fa fa-eye"></i>
+                                            <img src="~/Images/Property/@item.GlobalId/@item.MainImage" alt=""><i class="fa fa-eye"></i>
                                         </div>
                                         <div class="ct-main-text">
                                             <div class="ct-product--tilte">
-                                                8342 Silver Lane, Snow Hill City
+                                                @{string s = item.Address; if (item.Address.Length > 12) { s = item.Address.Substring(0, 12); }}@s, @item.City.Name
                                             </div>
                                             <div class="ct-product--price">
-                                                <span class="ct-price--Old">$ 450,000</span>
-                                                <span>$ 350,000</span>
+                                                @*<span class="ct-price--Old">$ 450,000</span>*@
+                                                <span>@item.Price PKR</span>
                                             </div>
                                             <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
+                                                @{string r = item.Description; if (r.Length > 55) { r = item.Description.Substring(0, 55); }}@r
                                             </div>
                                         </div>
                                     </div>
                                     <div class="ct-product--meta">
                                         <div class="ct-icons">
                                             <span>
-                                                <i class="fa fa-bed"></i> 3
+                                                <i class="fa fa-bed"></i> @item.Bed
                                             </span>
                                             <span>
-                                                <i class="fa fa-cutlery"></i> 2
+                                                <i class="fa fa-cutlery"></i> @item.Kitchen
                                             </span>
                                         </div>
                                         <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
+                                            <span> Area: <span>@item.Area @item.AreaUnit.Title</span></span>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
-                                <label class="control-label new">
-                                    New
-                                </label>
-                                <a href="product-single.html">
-                                    <div class="ct-main-content">
-                                        <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-11.jpg" alt=""><i class="fa fa-eye"></i>
-                                        </div>
-                                        <div class="ct-main-text">
-                                            <div class="ct-product--tilte">
-                                                4770 Cotton Berry Point, Carrot River
-                                            </div>
-                                            <div class="ct-product--price">
-                                                <span>$ 350,000</span>
-                                            </div>
-                                            <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ct-product--meta">
-                                        <div class="ct-icons">
-                                            <span>
-                                                <i class="fa fa-bed"></i> 3
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-cutlery"></i> 2
-                                            </span>
-                                        </div>
-                                        <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="clearfix visible-md"></div>
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
-                                <a href="product-single.html">
-                                    <div class="ct-main-content">
-                                        <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-12.jpg" alt=""><i class="fa fa-eye"></i>
-                                        </div>
-                                        <div class="ct-main-text">
-                                            <div class="ct-product--tilte">
-                                                7592 Gentle Zephyr Mountain, Hasty
-                                            </div>
-                                            <div class="ct-product--price">
-                                                <span>$ 350,000</span>
-                                            </div>
-                                            <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ct-product--meta">
-                                        <div class="ct-icons">
-                                            <span>
-                                                <i class="fa fa-bed"></i> 3
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-cutlery"></i> 2
-                                            </span>
-                                        </div>
-                                        <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
-                                <a href="product-single.html">
-                                    <div class="ct-main-content">
-                                        <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-1.jpg" alt=""><i class="fa fa-eye"></i>
-                                        </div>
-                                        <div class="ct-main-text">
-                                            <div class="ct-product--tilte">
-                                                2254 Easy Oak Drive, Caronport
-                                            </div>
-                                            <div class="ct-product--price">
-                                                <span>$ 350,000</span>
-                                            </div>
-                                            <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ct-product--meta">
-                                        <div class="ct-icons">
-                                            <span>
-                                                <i class="fa fa-bed"></i> 3
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-cutlery"></i> 2
-                                            </span>
-                                        </div>
-                                        <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="clearfix visible-md"></div>
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
-                                <a href="product-single.html">
-                                    <div class="ct-main-content">
-                                        <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-2.jpg" alt=""><i class="fa fa-eye"></i>
-                                        </div>
-                                        <div class="ct-main-text">
-                                            <div class="ct-product--tilte">
-                                                1979 Thunder Line, Stoopville
-                                            </div>
-                                            <div class="ct-product--price">
-                                                <span>$ 350,000</span>
-                                            </div>
-                                            <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ct-product--meta">
-                                        <div class="ct-icons">
-                                            <span>
-                                                <i class="fa fa-bed"></i> 3
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-cutlery"></i> 2
-                                            </span>
-                                        </div>
-                                        <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
-                                <a href="product-single.html">
-                                    <div class="ct-main-content">
-                                        <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-3.jpg" alt=""><i class="fa fa-eye"></i>
-                                        </div>
-                                        <div class="ct-main-text">
-                                            <div class="ct-product--tilte">
-                                                1724 Clear Hills Rise, Farewells
-                                            </div>
-                                            <div class="ct-product--price">
-                                                <span>$ 350,000</span>
-                                            </div>
-                                            <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ct-product--meta">
-                                        <div class="ct-icons">
-                                            <span>
-                                                <i class="fa fa-bed"></i> 3
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-cutlery"></i> 2
-                                            </span>
-                                        </div>
-                                        <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="clearfix visible-md"></div>
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
-                                <a href="product-single.html">
-                                    <div class="ct-main-content">
-                                        <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-4.jpg" alt=""><i class="fa fa-eye"></i>
-                                        </div>
-                                        <div class="ct-main-text">
-                                            <div class="ct-product--tilte">
-                                                1856 Misty Concession, Colonsay
-                                            </div>
-                                            <div class="ct-product--price">
-                                                <span>$ 350,000</span>
-                                            </div>
-                                            <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ct-product--meta">
-                                        <div class="ct-icons">
-                                            <span>
-                                                <i class="fa fa-bed"></i> 3
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-cutlery"></i> 2
-                                            </span>
-                                        </div>
-                                        <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
-                                <a href="product-single.html">
-                                    <div class="ct-main-content">
-                                        <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-5.jpg" alt=""><i class="fa fa-eye"></i>
-                                        </div>
-                                        <div class="ct-main-text">
-                                            <div class="ct-product--tilte">
-                                                3046 Merry Landing, High Lonesome Wells
-                                            </div>
-                                            <div class="ct-product--price">
-                                                <span>$ 350,000</span>
-                                            </div>
-                                            <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ct-product--meta">
-                                        <div class="ct-icons">
-                                            <span>
-                                                <i class="fa fa-bed"></i> 3
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-cutlery"></i> 2
-                                            </span>
-                                        </div>
-                                        <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="clearfix visible-md"></div>
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
-                                <a href="product-single.html">
-                                    <div class="ct-main-content">
-                                        <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-6.jpg" alt=""><i class="fa fa-eye"></i>
-                                        </div>
-                                        <div class="ct-main-text">
-                                            <div class="ct-product--tilte">
-                                                5454 Fallen Deer Wood, Flat Nose
-                                            </div>
-                                            <div class="ct-product--price">
-                                                <span>$ 350,000</span>
-                                            </div>
-                                            <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ct-product--meta">
-                                        <div class="ct-icons">
-                                            <span>
-                                                <i class="fa fa-bed"></i> 3
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-cutlery"></i> 2
-                                            </span>
-                                        </div>
-                                        <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
-                                <a href="product-single.html">
-                                    <div class="ct-main-content">
-                                        <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-7.jpg" alt=""><i class="fa fa-eye"></i>
-                                        </div>
-                                        <div class="ct-main-text">
-                                            <div class="ct-product--tilte">
-                                                2501 Heather Pine Round, Terramuggus
-                                            </div>
-                                            <div class="ct-product--price">
-                                                <span>$ 350,000</span>
-                                            </div>
-                                            <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ct-product--meta">
-                                        <div class="ct-icons">
-                                            <span>
-                                                <i class="fa fa-bed"></i> 3
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-cutlery"></i> 2
-                                            </span>
-                                        </div>
-                                        <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
-                                <a href="product-single.html">
-                                    <div class="ct-main-content">
-                                        <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-8.jpg" alt=""><i class="fa fa-eye"></i>
-                                        </div>
-                                        <div class="ct-main-text">
-                                            <div class="ct-product--tilte">
-                                                9541 Rustic Forest Crescent, Falmouth
-                                            </div>
-                                            <div class="ct-product--price">
-                                                <span>$ 350,000</span>
-                                            </div>
-                                            <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ct-product--meta">
-                                        <div class="ct-icons">
-                                            <span>
-                                                <i class="fa fa-bed"></i> 3
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-cutlery"></i> 2
-                                            </span>
-                                        </div>
-                                        <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-4">
-                            <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
-                                <a href="product-single.html">
-                                    <div class="ct-main-content">
-                                        <div class="ct-imageBox">
-                                            <img src="assets/images/demo-content/property-9.jpg" alt=""><i class="fa fa-eye"></i>
-                                        </div>
-                                        <div class="ct-main-text">
-                                            <div class="ct-product--tilte">
-                                                916 Umber Run, Skookumchuck
-                                            </div>
-                                            <div class="ct-product--price">
-                                                <span>$ 350,000</span>
-                                            </div>
-                                            <div class="ct-product--description">
-                                                Beautiful apartment in a great, very calm and safe place.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ct-product--meta">
-                                        <div class="ct-icons">
-                                            <span>
-                                                <i class="fa fa-bed"></i> 3
-                                            </span>
-                                            <span>
-                                                <i class="fa fa-cutlery"></i> 2
-                                            </span>
-                                        </div>
-                                        <div class="ct-text">
-                                            <span> Area: <span>105 m2</span></span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="clearfix visible-md"></div>
+                        }
                     </div>
                     <div class="ct-pagination text-center">
-                        <ul class="pagination">
+                        @Html.PagedListPager(Model, page => Url.Action("List", new { page, Id = Request.QueryString["Id"], CityId = Request.QueryString["CityId"], PropertyStatus = Request.QueryString["PropertyStatus"], PropertyType = Request.QueryString["PropertyType"], BedRoom = Request.QueryString["BedRoom"], BathRoom = Request.QueryString["BathRoom"], Price = Request.QueryString["Price"] }))
+                        @*<ul class="pagination">
                             <li><a href="#" aria-label="Previous"><span aria-hidden="true"><i class="fa fa-angle-left"></i></span></a></li>
                             <li class="active"><a href="#">1</a></li>
                             <li><a href="#">2</a></li>
@@ -587,9 +210,16 @@
                             <li><a href="#">4</a></li>
                             <li><a href="#">5</a></li>
                             <li><a href="#" aria-label="Next"><span aria-hidden="true"><i class="fa fa-angle-right"></i></span></a></li>
-                        </ul>
+                        </ul>*@
                     </div>
                 </div>
+               }
+               else { 
+               <div class="col-md-8 text-center">
+                   <h3>Sorry No Match Found!</h3>
+               </div>
+               
+               }
             </div>
         </div>
     </div>

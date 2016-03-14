@@ -18,6 +18,8 @@ using System.Web.Mvc;
 
 namespace ELand.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class UserController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

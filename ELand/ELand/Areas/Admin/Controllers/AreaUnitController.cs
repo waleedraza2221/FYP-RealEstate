@@ -12,6 +12,7 @@ using ELand.Models;
 
 namespace ELand.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AreaUnitController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

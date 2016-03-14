@@ -11,9 +11,12 @@ using Kendo.Mvc.UI;
 using ELand.Models;
 using System.Net.Mail;
 using ELand.Helper;
+using System.Threading.Tasks;
+using System.Web.Configuration;
 
 namespace ELand.Areas.Admin.Controllers
 {
+   [Authorize(Roles = "Admin")]
     public class ContactController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -21,6 +24,39 @@ namespace ELand.Areas.Admin.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public Task SendAsync(string touser, string body)
+        {
+            var result = Task.FromResult(0);
+            try
+            {
+
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress(WebConfigurationManager.AppSettings["userid"]);
+                message.To.Add(new MailAddress(touser));
+                message.Subject = "No Reply";
+                message.Body = body;
+                message.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient(WebConfigurationManager.AppSettings["smtp"]);
+                smtp.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["userid"], WebConfigurationManager.AppSettings["pass"]);
+                smtp.Port = 25;
+                smtp.EnableSsl = false;
+                smtp.Send(message);
+
+
+
+                result = Task.FromResult(1);
+            }
+            catch (Exception e)
+            {
+                result = Task.FromResult(0);
+            }
+
+
+            return result;
+
+
         }
 
 
@@ -35,10 +71,10 @@ namespace ELand.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public ActionResult IsSeen(string rmessage) {
+        public ActionResult IsSeen(string rmessage,string Email) {
             // Send Email Or Phone Message Here
-            Utility.SendAsync("admin@admin.com","waleedraza221@gmail.com","Reply",rmessage);
-
+          //  Utility.SendAsync("admin@admin.com","waleedraza221@gmail.com","Reply",rmessage);
+            SendAsync(Email, rmessage);
             return RedirectToAction("Index","Contact");
         }
 

@@ -25,7 +25,7 @@ namespace ELand.Models
             [Required]
         public string Area { get; set; }
             [Required]
-        public string Price { get; set; }
+        public Int64 Price { get; set; }
 
             public string GlobalId { get; set; }
         public string State { get; set; }
@@ -62,11 +62,11 @@ namespace ELand.Models
         public bool Digital_Antenna { get; set; }
         public string UserId { get; set; }
         [ForeignKey("UserId")]
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
         [Required]
         public int CityId { get; set; }
         [ForeignKey("CityId")]
-        public City City { get; set; }
+        public virtual City City { get; set; }
         public DateTime PublishDate { get; set; }
         public DateTime UpdateDate { get; set; }
         

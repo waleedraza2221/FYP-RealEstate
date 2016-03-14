@@ -1,0 +1,97 @@
+﻿
+@using PagedList.Mvc;
+@using PagedList;
+@model  IPagedList<ELand.Models.Property>
+
+@{
+
+    ViewBag.Title = "Properties";
+
+
+
+}
+<section class="ct-u-paddingTop50 ct-u-paddingBottom60">
+    <div class="container">
+        <div class="ct-section--products">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ct-sortingBar ct-u-paddingRight10 ct-u-paddingLeft10 ct-u-marginBottom30">
+                        <div class="ct-sortingTitle pull-left">
+                            <h4 class="text-uppercase">Properties</h4>
+                        </div>
+
+                        <ul class="ct-showPages list-inline list-unstyled pull-right ct-u-paddingBoth15">
+                            <li class="ct-showElements is-active" id="ct-js-showTiles">
+                                <a href="#">
+                                    <i class="fa fa-th fa-fw"></i>
+                                </a>
+                            </li>
+                            <li class="ct-showElements" id="ct-js-showList">
+                                <a href="#">
+                                    <i class="fa fa-th-list fa-fw"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="row ct-js-search-results ct-showProducts--default">
+                        @foreach (var item in Model)
+                        {
+
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="max-height:343px;">
+                                <div class="ct-itemProducts ct-u-marginBottom30 ct-hover">
+                                    @if (item.Purpose.Title == "Sale")
+                                    {
+                                        <label class="control-label sale">
+                                            Sale
+                                        </label>}
+                                    else
+                                    {
+
+                                        <label class="control-label new">
+                                            @item.Purpose.Title
+                                        </label>
+                                    }
+                                    <a href="@Url.Action("Index", "Property", new { id=@item.Id})">
+                                        <div class="ct-main-content">
+                                            <div class="ct-imageBox">
+                                                <img src="~/Images/Property/@item.GlobalId/@item.MainImage" alt=""><i class="fa fa-eye"></i>
+                                            </div>
+                                            <div class="ct-main-text">
+                                                <div class="ct-product--tilte">
+                                                    @{string s = item.Address; if (item.Address.Length > 12) { s = item.Address.Substring(0, 12); }}@s, @item.City.Name
+                                                </div>
+                                                <div class="ct-product--price">
+                                                    <span>@item.Price PKR</span>
+                                                </div>
+                                                <div class="ct-product--description">
+                                                    @{string r = item.Description; if (r.Length > 55) { r = item.Description.Substring(0, 55); }}@r
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ct-product--meta">
+                                            <div class="ct-icons">
+                                                <span>
+                                                    <i class="fa fa-bed"></i> @item.Bed
+                                                </span>
+                                                <span>
+                                                    <i class="fa fa-cutlery"></i> @item.Kitchen
+                                                </span>
+                                            </div>
+                                            <div class="ct-text">
+                                                <span> Area: <span> @item.Area @item.AreaUnit.Title</span></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="ct-pagination text-center">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,6 +1,6 @@
 ﻿@Styles.Render("~/Content/Kendo")
 
-
+@using ELand.Models;
 
 @{
     ViewBag.Title = "DashBoard";
@@ -9,8 +9,24 @@
 <div class="container">
     <div class="row">
         @{
+            ApplicationDbContext db=new ApplicationDbContext();
+            var user = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+        }
+        @if (user.IsAgencyAdmin)
+        {
+            <a href="@Url.Action("Edit", "Agency", new { Id=user.AgencyId})" class="btn btn-primary">Edit Agency</a>
+            <br />
+            
+            Html.RenderAction("AgentList", "Dashboard", new { Id=user.Id});
+        }
+
+    </div>
+    <br />
+    <div class="row">
+        @{
             Html.RenderAction("PropertyList", "Dashboard");
         }
+     
     </div>
 </div>
 <br />

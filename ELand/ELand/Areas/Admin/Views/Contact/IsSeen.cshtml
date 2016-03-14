@@ -4,56 +4,50 @@
     ViewBag.Title = "IsSeen";
 }
 
-<h2>IsSeen</h2>
+<div class="container">
+    <div>
+        <h4>Contact</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-<div>
-    <h4>Contact</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Message)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Message)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Message)
+            </dd>
+        </dl>
+        <form method="post">
+            <input type="text" id="rmessage" class="form-control" name="rmessage" placeholder="Enter Reply" />
+            @Html.HiddenFor(model=>model.Email)
+            <input type="submit" class="btn btn-primary" value="Reply" />
+        </form>
 
-        <dd>
-            @Html.DisplayFor(model => model.Message)
-        </dd>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsRead)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsRead)
-        </dd>
-
-    </dl>
-    <form method="post">
-        <input type="text" id="rmessage" name="rmessage" placeholder="Enter Reply" />
-        <input type="submit" class="btn btn-primary" value="Reply" />
-    </form>
 
 </div>

@@ -32,10 +32,10 @@ namespace ELand.Models
         public bool IsAgencyAdmin {get; set;}
         public int? AccountTypeId { get; set; }
         [ForeignKey("AccountTypeId")]
-        public AccountType AccountType { get; set; }
+        public virtual AccountType AccountType { get; set; }
         public int? AgencyId { get; set; }
         [ForeignKey("AgencyId")]
-        public Agency Agency { get; set; }
+        public virtual Agency Agency { get; set; }
 
         public virtual ICollection<Property> Properties { get; set; }
 

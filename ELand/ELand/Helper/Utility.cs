@@ -12,7 +12,7 @@ namespace ELand.Helper
         public static Task SendAsync(string FromUser, string ToUser, string subject, string body)
         { 
             var result = Task.FromResult(0);
-            var toAddress = new System.Net.Mail.MailAddress(FromUser, FromUser);
+            var toAddress = new System.Net.Mail.MailAddress(ToUser, ToUser);
 
 
             try
@@ -22,8 +22,8 @@ namespace ELand.Helper
 
                 string Username = "admin@wr-itc.com";
                 string Password = "Waleed123!";
-                string port = "567";
-                string SmptServer = "md-67.webhostbox.net";
+                string port = "25";
+                string SmptServer = "mail.wr-itc.com";
 
 
                 emessage.To.Add(toAddress);
@@ -35,7 +35,7 @@ namespace ELand.Helper
                 var netCredential = new System.Net.NetworkCredential(Username, Password);
                 sc.Host = SmptServer;
                 sc.DeliveryMethod = SmtpDeliveryMethod.Network;
-                sc.UseDefaultCredentials = false;
+         
                 sc.Credentials = netCredential;
                 sc.Port = Convert.ToInt32(port);
              

@@ -1,0 +1,65 @@
+﻿@model ELand.Models.Agency
+
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <br />
+        <div class="col-md-6 col-md-offset-2">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model=>model.Image)
+            <div class="ct-form--item ct-u-marginBottom20">
+                <label> Title</label>
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control input-lg", required = "required" })
+
+            </div>
+
+            <div class="ct-form--item ct-u-marginBottom20">
+                <label>Description</label>
+                @Html.TextBoxFor(x => x.Description, new { @class = "form-control input-lg", required = "required" })
+            </div>
+
+            <div class="ct-form--item ct-u-marginBottom20">
+                <label>Skype</label>
+                @Html.TextBoxFor(x => x.Skype, new { @class = "form-control input-lg", required = "required" })
+            </div>
+
+            <div class="ct-form--item ct-u-marginBottom20">
+                <label>Facebook</label>
+                @Html.TextBoxFor(x => x.Facebook, new { @class = "form-control input-lg", required = "required" })
+            </div>
+
+            <div class="ct-form--item ct-u-marginBottom20">
+                <label>Twitter</label>
+                @Html.TextBoxFor(x => x.Twitter, new { @class = "form-control input-lg", required = "required" })
+            </div>
+            <div class="ct-form--item ct-u-marginBottom20">
+                <label>Instagram</label>
+                @Html.TextBoxFor(x => x.Instagram, new { @class = "form-control input-lg", required = "required" })
+            </div>
+
+            <div class="ct-form--item ct-u-marginBottom20">
+                <label>Email</label>
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control input-lg", required = "required" })
+            </div>
+
+            <div class="ct-form--item ct-u-marginBottom20">
+                <label>Mobile</label>
+                @Html.TextBoxFor(x => x.Mobile, new { @class = "form-control input-lg", required = "required" })
+            </div>
+
+            <div class="ct-form--item ct-u-marginBottom20">
+                <label>Image</label>
+                <input type="file" name="img" accept="image/*" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
