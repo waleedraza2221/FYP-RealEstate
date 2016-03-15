@@ -9,6 +9,9 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList.Mvc;
 using PagedList;
+using System.Threading.Tasks;
+using System.Net.Mail;
+using System.Web.Configuration;
 
 namespace ELand.Controllers
 {    
@@ -22,6 +25,46 @@ namespace ELand.Controllers
             var data=db.Property.FirstOrDefault(x=>x.Id==Id);
             ViewBag.Contact = db.Users.FirstOrDefault(x => x.Id == data.UserId);
             return View(data);
+        }
+
+        public Task SendAsync(string from,string touser, string subject, string body)
+        {
+            var result = Task.FromResult(0);
+            try
+            {
+
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress(from);
+                message.To.Add(new MailAddress(touser));
+                message.Subject = subject;
+                message.Body = body;
+                message.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient(WebConfigurationManager.AppSettings["smtp"]);
+                smtp.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["userid"], WebConfigurationManager.AppSettings["pass"]);
+                smtp.Port = 25;
+                smtp.EnableSsl = false;
+                smtp.Send(message);
+
+
+
+                result = Task.FromResult(1);
+            }
+            catch (Exception e)
+            {
+                result = Task.FromResult(0);
+            }
+
+
+            return result;
+
+
+        }
+        public ActionResult Contact(string Name, string Phone, string Message,string Email,string AgentMail) {
+
+
+            SendAsync(Email, AgentMail, Name + Phone, Message);
+
+            return Content("Thanks For Contacting We will contact you soon");
         }
 
         public ActionResult List(SearchProperty search,int? page)

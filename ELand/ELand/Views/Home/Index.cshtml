@@ -186,7 +186,7 @@
                                 }
                                 <a href="@Url.Action("Index", "Property", new { id=@item.Id})">
                                     <div class="ct-main-content">
-                                        <div class="ct-imageBox">
+                                        <div class="ct-imageBox" style="height:208px;">
                                             <img src="~/Images/Property/@item.GlobalId/@item.MainImage" alt=""><i class="fa fa-eye"></i>
                                         </div>
                                         <div class="ct-main-text">
@@ -196,7 +196,7 @@
                                             <div class="ct-product--price">
                                                 <span>@item.Price PKR</span>
                                             </div>
-                                            <div class="ct-product--description">
+                                            <div class="ct-product--description" style=" height: 42px;">
                                                 @{string r = item.Description; if (r.Length > 55) { r = item.Description.Substring(0, 55); }}@r
  </div>
                                         </div>
@@ -251,7 +251,7 @@
                     }
                     <a href="@Url.Action("Index", "Property", new { id=@item.Id})">
                         <div class="ct-main-content">
-                            <div class="ct-imageBox">
+                            <div class="ct-imageBox" style="height:134px;">
                                 <img src="~/Images/Property/@item.GlobalId/@item.MainImage" alt=""><i class="fa fa-eye"></i>
                             </div>
                             <div class="ct-main-text">
@@ -261,7 +261,7 @@
                                 <div class="ct-product--price">
                                     <span>@item.Price PKR</span>
                                 </div>
-                                <div class="ct-product--description">
+                                <div class="ct-product--description" style=" height: 42px;">
                                     @{string r = item.Description; if (r.Length > 55) { r = item.Description.Substring(0, 55); }}@r
                                           </div>
                             </div>
