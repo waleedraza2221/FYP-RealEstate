@@ -31,8 +31,7 @@ namespace ELand.Models
         public string Instagram { get; set; }
         public bool IsAgencyAdmin {get; set;}
         public int? AccountTypeId { get; set; }
-        [ForeignKey("AccountTypeId")]
-        public virtual AccountType AccountType { get; set; }
+       
         public int? AgencyId { get; set; }
         [ForeignKey("AgencyId")]
         public virtual Agency Agency { get; set; }
@@ -52,7 +51,7 @@ namespace ELand.Models
         }
         public DbSet<Agency> Agency { get; set; }
         public DbSet<Property> Property { get; set; }
-        public DbSet<AccountType> AccountType { get; set; }
+        
         public DbSet<AreaUnit> AreaUnit { get; set; }
         public DbSet<Purpose> Purpose { get; set; }
         public DbSet<PType> PType { get; set; }
